@@ -1,0 +1,4 @@
+"#accountWindow": {
+	backgroundImage: '/common/setting_bg.png',
+	barImage: '/common/top.png',
+}

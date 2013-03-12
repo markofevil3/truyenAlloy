@@ -1,0 +1,38 @@
+".rows": {
+	height: 100,
+	backgroundColor: 'transparent',
+	backgroundImage: '/common/dark-background.png',
+},
+".bookCoverViews": {
+	backgroundColor: 'transparent',
+	width: '19%',
+	height: '90%',
+	left: '1%'
+},
+".bookCovers": {
+	width: '92%',
+	height: '93%',
+	top: '4%',
+	left: '3%'
+},
+".detailViews": {
+	width: '75%',
+	height: '100%',
+	left: '24%',
+	layout: 'vertical',
+},
+".storyTitles": {
+	font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE' },
+	left: 0,
+	color: '#fff'
+},
+".storyAuthors": {
+	font: { fontSize: 17, fontStyle: 'italic', fontFamily: 'Chalkboard SE' },
+	left: 0,
+	color: '#fff'
+},
+".storyTypes": {
+	font: { fontStyle: 'italic', fontSize: 15, fontFamily: 'Chalkboard SE' },
+	left: 0,
+	color: '#fff'
+}

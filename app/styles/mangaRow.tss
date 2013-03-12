@@ -1,0 +1,11 @@
+".rows": {
+	height: 40,
+	backgroundColor: 'transparent',
+	backgroundImage: '/common/bookshelfBackground.png',
+	// selectedBackgroundColor: 'transparent'
+},
+".chapters": {
+	color: '#fff',
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
+}

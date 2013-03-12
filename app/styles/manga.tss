@@ -1,0 +1,73 @@
+"#mangaWindow": {
+	backgroundImage: '/common/setting_bg.png',
+	barImage: '/common/top.png',
+	layout: 'vertical'
+},
+"#mangaInfoView": {
+	width: '100%',
+	height: 120,
+	backgroundColor: '#d8cdc0',
+	backgroundImage: '/common/whitePaper.png',
+	layout: 'horizontal'
+},
+"#bookBackgroundView": {
+	width: '25%',
+	height: '86%',
+	top: '7%',
+	left: 5,
+	backgroundImage: '/common/book1.png',
+},
+"#bookCover": {
+	width: '80%',
+	height: '96%',
+	defaultImage: '/common/default_image.jpg',
+	top: 0,
+	left: '14%',
+},
+"#bookDetails": {
+	width: '69%',
+	height: '100%',
+	backgroundColor: 'transparent',
+	layout: 'vertical',
+	left: 5
+},
+"#bookTitle": {
+	color: '#fff',
+	font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE'},
+	left: 0
+},
+"#bookAuthor": {
+	font: { fontSize: 16, fontStyle: 'italic' },
+	left: 0
+},
+"#newestChapter": {
+	font: { fontSize: 18, fontStyle: 'bold' },
+	left: 0
+},
+"numView": {
+	font: { fontSize: 18, fontStyle: 'bold' },
+	left: 0,
+	width: '100%',
+	height: 20,
+	backgroundColor: 'red',
+	layout: 'horizontal'
+},
+"#numViewIcon": {
+	image: '/common/view.png',
+	width: 20,
+	height: 20,
+	left: 0
+},
+"#numViewText": {
+	left: 22
+},
+"#bookShellTable": {
+  backgroundColor: 'transparent',
+  separatorColor: 'transparent',
+  style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+  separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+},
+"#advView": {
+	width: '100%',
+	height: 40,
+},

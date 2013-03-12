@@ -1,0 +1,33 @@
+"TableView": {
+  backgroundColor: 'transparent',
+  separatorColor: 'transparent',
+  style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+  separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+},
+".homeRow": {
+	height: 120,
+	backgroundColor: 'transparent',
+	backgroundImage: '/common/bookshelfBackground.png',
+	// selectedBackgroundColor: 'orange',
+},
+".homeRowBackground": {
+	width: '100%',
+	height: '100%',
+	backgroundImage: '/common/bookShelf.png',
+},
+".homeMenuName": {
+	color: '#fff',
+	font: { fontSize: 20, fontWeight: 'bold', fontFamily: 'Chalkboard SE' },
+	zIndex: 2
+},
+".homeBackgroundPanel": {
+	width: 181,
+	height: 45,
+},
+"#advertise": {
+	width: '100%',
+	height: 40,
+	backgroundColor: '#fff',
+	selectedBackgroundColor: 'transparent',
+	name: 'Advertise'
+}

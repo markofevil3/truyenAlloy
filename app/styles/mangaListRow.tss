@@ -1,0 +1,39 @@
+".rows": {
+	height:120,
+	backgroundColor: 'transparent',
+	backgroundImage: '/common/bookshelfBackground.png',
+	selectedBackgroundColor: 'transparent',
+	layout: 'horizontal'
+},
+".bookInfoViews": {
+	width: 90,
+	left: 12.5,
+	layout: 'vertical',
+	selectedBackgroundColor: 'blue',
+},
+".nameTagBackgrounds": {
+	backgroundImage: '/common/bg_paper_tournament.png',
+	height: '25%',
+	top: 0,
+	width: '100%',
+},
+".bookNames": {
+	color: '#fff',
+	font: { fontSize: 13, fontWeight: 'bold', fontFamily: 'Chalkboard SE'},
+	textAlign: 'center',
+	horizontalWrap: true,
+},
+".bookCovers": {
+	width: '75%',
+	height: '68%',
+	backgroundImage: '/common/book2.png',
+},
+".coverLinks": {
+	image: 'http://localhost:3000/images/manga/9-faces-of-love/cover.jpg',
+	width: '80%',
+	height: 77,
+	top: 0,
+	left: 9,
+	defaultImage: '/common/default_image.jpg',
+}
+
