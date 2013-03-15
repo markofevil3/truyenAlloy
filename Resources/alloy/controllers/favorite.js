@@ -80,6 +80,7 @@ function Controller() {
         style: Ti.Facebook.BUTTON_STYLE_NORMAL
     });
     $.favoriteWindow.addEventListener("focus", function(f) {
+        Alloy.Globals.CURRENT_TAB = $.favoriteTab;
         if (Titanium.Facebook.loggedIn == 0) {
             Ti.Facebook.authorize();
             Titanium.Facebook.addEventListener("login", function(e) {
@@ -90,7 +91,6 @@ function Controller() {
     Alloy.Globals.adv(Alloy.Globals.getDeviceType(), function(advImage) {
         $.advView.add(advImage);
     });
-    Alloy.Globals.CURRENT_TAB = $.favoriteTab;
     _.extend($, exports);
 }
 

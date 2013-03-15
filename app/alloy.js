@@ -10,7 +10,7 @@
 //
 // Alloy.Globals.someGlobalFunction = function(){};
 
-Alloy.Globals.SERVER = 'http://truyenalloy.zapto.org';
+Alloy.Globals.SERVER = 'http://truyen.zapto.org';
 Alloy.Globals.MAX_DISPLAY_ROW = 30;
 Alloy.Globals.RATIO = 1;
 Alloy.Globals.CURRENT_TAB = null;

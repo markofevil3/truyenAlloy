@@ -2,3 +2,6 @@ eclipse.preferences.version=1
 provisioning_profiles/development/663F1173-48D6-4578-83B6-217C75B54517/appid=*
 provisioning_profiles/development/663F1173-48D6-4578-83B6-217C75B54517/name=buiphiquan
 provisioning_profiles/development/663F1173-48D6-4578-83B6-217C75B54517/uuid=663F1173-48D6-4578-83B6-217C75B54517
+provisioning_profiles/development/EDADC1F7-6884-4AC7-8C7B-11C93989BAF6/appid=*
+provisioning_profiles/development/EDADC1F7-6884-4AC7-8C7B-11C93989BAF6/name=iOS Team Provisioning Profile\: truyen
+provisioning_profiles/development/EDADC1F7-6884-4AC7-8C7B-11C93989BAF6/uuid=EDADC1F7-6884-4AC7-8C7B-11C93989BAF6

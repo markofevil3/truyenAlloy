@@ -24,8 +24,8 @@ function Controller() {
         id: "account",
         title: "Tài Khoản"
     });
-    var __alloyId18 = [];
-    __alloyId18.push($.__views.account);
+    var __alloyId17 = [];
+    __alloyId17.push($.__views.account);
     selectMenu ? $.__views.account.addEventListener("click", selectMenu) : __defers["$.__views.account!click!selectMenu"] = !0;
     $.__views.support = Ti.UI.createTableViewRow({
         height: 40,
@@ -39,7 +39,7 @@ function Controller() {
         id: "support",
         title: "Yêu Cầu Truyện"
     });
-    __alloyId18.push($.__views.support);
+    __alloyId17.push($.__views.support);
     selectMenu ? $.__views.support.addEventListener("click", selectMenu) : __defers["$.__views.support!click!selectMenu"] = !0;
     $.__views.aboutUs = Ti.UI.createTableViewRow({
         height: 40,
@@ -53,18 +53,18 @@ function Controller() {
         id: "aboutUs",
         title: "Giới Thiệu"
     });
-    __alloyId18.push($.__views.aboutUs);
+    __alloyId17.push($.__views.aboutUs);
     selectMenu ? $.__views.aboutUs.addEventListener("click", selectMenu) : __defers["$.__views.aboutUs!click!selectMenu"] = !0;
     $.__views.adv = Ti.UI.createTableViewRow({
         id: "adv"
     });
-    __alloyId18.push($.__views.adv);
+    __alloyId17.push($.__views.adv);
     $.__views.settingTableView = Ti.UI.createTableView({
         height: "50%",
         scrollable: !1,
         backgroundColor: "transparent",
         top: 0,
-        data: __alloyId18,
+        data: __alloyId17,
         id: "settingTableView"
     });
     $.__views.settingWindow.add($.__views.settingTableView);
@@ -88,7 +88,9 @@ function Controller() {
     Alloy.Globals.adv(Alloy.Globals.getDeviceType(), function(advImage) {
         $.adv.add(advImage);
     });
-    Alloy.Globals.CURRENT_TAB = $.settingTab;
+    $.settingWindow.addEventListener("focus", function(e) {
+        Alloy.Globals.CURRENT_TAB = $.settingTab;
+    });
     $.facebookLikeBox.url = Alloy.Globals.SERVER + "/facebook?type=" + Alloy.Globals.isTablet();
     __defers["$.__views.account!click!selectMenu"] && $.__views.account.addEventListener("click", selectMenu);
     __defers["$.__views.support!click!selectMenu"] && $.__views.support.addEventListener("click", selectMenu);

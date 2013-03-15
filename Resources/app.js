@@ -4,7 +4,7 @@ function isHash(obj) {
 
 var Alloy = require("alloy"), _ = Alloy._, Backbone = Alloy.Backbone;
 
-Alloy.Globals.SERVER = "http://truyenalloy.zapto.org";
+Alloy.Globals.SERVER = "http://truyen.zapto.org";
 
 Alloy.Globals.MAX_DISPLAY_ROW = 30;
 

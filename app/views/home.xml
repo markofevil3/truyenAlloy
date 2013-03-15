@@ -1,6 +1,6 @@
 <Alloy>
 	<Tab id="homeTab" icon="/common/home.png">
-		<Window class="tabs" title="Home">
+		<Window id="homeWindow" class="tabs" title="Home">
 			<TableView id="homeTableView">
 			  <TableViewRow id="advertise">
 			  </TableViewRow>
