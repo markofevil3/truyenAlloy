@@ -7,12 +7,17 @@
 	backgroundColor: 'transparent',
 	zIndex: 9999
 },
-"#topBar": {
+"#topBar[platform=ios formFactor=handheld]": {
 	backgroundColor: '#000',
 	height: 40,
 	top: 0,
 },
-"#closeButton": {
+"#topBar[platform=ios formFactor=tablet]": {
+	backgroundColor: '#000',
+	height: 80,
+	top: 0,
+},
+"#closeButton[platform=ios formFactor=handheld]": {
 	title: 'close',
 	width: 60,
 	height: 25,
@@ -26,18 +31,46 @@
 	selectedColor: '#333',
 	color: '#CCCCCC'
 },
-"#chapterTitle": {
+"#closeButton[platform=ios formFactor=tablet]": {
+	title: 'close',
+	width: 120,
+	height: 50,
+	right: 10,
+	font: { fontWeight: 'bold', fontSize: 28 },
+	borderRadius: 10,
+	borderWidth: 2,
+	borderColor: '#ffffff',
+	backgroundColor: '#222',
+	backgroundImage: 'NONE',
+	selectedColor: '#333',
+	color: '#CCCCCC'
+},
+"#chapterTitle[platform=ios formFactor=handheld]": {
 	color: '#CCCCCC',
 	font: { fontWeight: 'bold', fontSize: 17 }
 },
-"#pageCount": {
+"#chapterTitle[platform=ios formFactor=tablet]": {
+	color: '#CCCCCC',
+	font: { fontWeight: 'bold', fontSize: 34 }
+},
+"#pageCount[platform=ios formFactor=handheld]": {
 	color: '#CCCCCC',
 	left: 10,
 	font: { fontSize: 17 }
 },
-"#advView2": {
+"#pageCount[platform=ios formFactor=tablet]": {
+	color: '#CCCCCC',
+	left: 10,
+	font: { fontSize: 34 }
+},
+"#advView2[platform=ios formFactor=handheld]": {
 	width: '100%',
 	height: 40,
+	bottom: 0
+},
+"#advView2[platform=ios formFactor=tablet]": {
+	width: '100%',
+	height: 80,
 	bottom: 0
 },
 "#imageHolderView": {

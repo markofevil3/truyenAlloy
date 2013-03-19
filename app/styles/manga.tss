@@ -3,9 +3,16 @@
 	barImage: '/common/top.png',
 	layout: 'vertical'
 },
-"#mangaInfoView": {
+"#mangaInfoView[platform=ios formFactor=handheld]": {
 	width: '100%',
 	height: 120,
+	backgroundColor: '#d8cdc0',
+	backgroundImage: '/common/whitePaper.png',
+	layout: 'horizontal'
+},
+"#mangaInfoView[platform=ios formFactor=tablet]": {
+	width: '100%',
+	height: 240,
 	backgroundColor: '#d8cdc0',
 	backgroundImage: '/common/whitePaper.png',
 	layout: 'horizontal'
@@ -31,35 +38,51 @@
 	layout: 'vertical',
 	left: 5
 },
-"#bookTitle": {
+"#bookTitle[platform=ios formFactor=handheld]": {
 	color: '#fff',
 	font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE'},
 	left: 0
 },
-"#bookAuthor": {
+"#bookTitle[platform=ios formFactor=tablet]": {
+	color: '#fff',
+	font: { fontWeight: 'bold', fontSize: 38, fontFamily: 'Chalkboard SE'},
+	left: 0
+},
+"#bookAuthor[platform=ios formFactor=handheld]": {
 	font: { fontSize: 16, fontStyle: 'italic' },
 	left: 0
 },
-"#newestChapter": {
+"#bookAuthor[platform=ios formFactor=tablet]": {
+	font: { fontSize: 32, fontStyle: 'italic' },
+	left: 0
+},
+"#newestChapter[platform=ios formFactor=handheld]": {
 	font: { fontSize: 18, fontStyle: 'bold' },
 	left: 0
 },
-"numView": {
-	font: { fontSize: 18, fontStyle: 'bold' },
-	left: 0,
-	width: '100%',
-	height: 20,
-	backgroundColor: 'red',
-	layout: 'horizontal'
+"#newestChapter[platform=ios formFactor=tablet]": {
+	font: { fontSize: 36, fontStyle: 'bold' },
+	left: 0
 },
-"#numViewIcon": {
+"#numViewIcon[platform=ios formFactor=handheld]": {
 	image: '/common/view.png',
 	width: 20,
 	height: 20,
 	left: 0
 },
-"#numViewText": {
-	left: 22
+"#numViewIcon[platform=ios formFactor=tablet]": {
+	image: '/common/view.png',
+	width: 40,
+	height: 40,
+	left: 0
+},
+"#numViewText[platform=ios formFactor=handheld]": {
+	left: 22,
+	font: { fontSize: 18, fontStyle: 'bold' },
+},
+"#numViewText[platform=ios formFactor=tablet]": {
+	left: 44,
+	font: { fontSize: 36, fontStyle: 'bold' },
 },
 "#bookShellTable": {
   backgroundColor: 'transparent',
@@ -67,7 +90,11 @@
   style: Ti.UI.iPhone.TableViewStyle.PLAIN,
   separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 },
-"#advView": {
+"#advView[platform=ios formFactor=handheld]": {
 	width: '100%',
 	height: 40,
 },
+"#advView[platform=ios formFactor=tablet]": {
+	width: '100%',
+	height: 80,
+}

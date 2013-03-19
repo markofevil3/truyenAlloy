@@ -96,57 +96,138 @@ function Controller() {
         id: "funcBar"
     });
     $.__views.mangaReadingWindow.add($.__views.funcBar);
-    $.__views.topBar = Ti.UI.createView({
-        backgroundColor: "#000",
-        height: 40,
-        top: 0,
-        id: "topBar"
-    });
+    $.__views.topBar = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            backgroundColor: "#000",
+            height: 40,
+            top: 0
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            backgroundColor: "#000",
+            height: 80,
+            top: 0
+        });
+        _.extend(o, {
+            id: "topBar"
+        });
+        return o;
+    }());
     $.__views.funcBar.add($.__views.topBar);
-    $.__views.closeButton = Ti.UI.createButton({
-        title: "close",
-        width: 60,
-        height: 25,
-        right: 10,
-        font: {
-            fontWeight: "bold",
-            fontSize: 14
-        },
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: "#ffffff",
-        backgroundColor: "#222",
-        backgroundImage: "NONE",
-        selectedColor: "#333",
-        color: "#CCCCCC",
-        id: "closeButton"
-    });
+    $.__views.closeButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            title: "close",
+            width: 60,
+            height: 25,
+            right: 10,
+            font: {
+                fontWeight: "bold",
+                fontSize: 14
+            },
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: "#ffffff",
+            backgroundColor: "#222",
+            backgroundImage: "NONE",
+            selectedColor: "#333",
+            color: "#CCCCCC"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            title: "close",
+            width: 120,
+            height: 50,
+            right: 10,
+            font: {
+                fontWeight: "bold",
+                fontSize: 28
+            },
+            borderRadius: 10,
+            borderWidth: 2,
+            borderColor: "#ffffff",
+            backgroundColor: "#222",
+            backgroundImage: "NONE",
+            selectedColor: "#333",
+            color: "#CCCCCC"
+        });
+        _.extend(o, {
+            id: "closeButton"
+        });
+        return o;
+    }());
     $.__views.topBar.add($.__views.closeButton);
     closeWindow ? $.__views.closeButton.addEventListener("click", closeWindow) : __defers["$.__views.closeButton!click!closeWindow"] = !0;
-    $.__views.chapterTitle = Ti.UI.createLabel({
-        color: "#CCCCCC",
-        font: {
-            fontWeight: "bold",
-            fontSize: 17
-        },
-        id: "chapterTitle"
-    });
+    $.__views.chapterTitle = Ti.UI.createLabel(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            color: "#CCCCCC",
+            font: {
+                fontWeight: "bold",
+                fontSize: 17
+            }
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            color: "#CCCCCC",
+            font: {
+                fontWeight: "bold",
+                fontSize: 34
+            }
+        });
+        _.extend(o, {
+            id: "chapterTitle"
+        });
+        return o;
+    }());
     $.__views.topBar.add($.__views.chapterTitle);
-    $.__views.pageCount = Ti.UI.createLabel({
-        color: "#CCCCCC",
-        left: 10,
-        font: {
-            fontSize: 17
-        },
-        id: "pageCount"
-    });
+    $.__views.pageCount = Ti.UI.createLabel(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            color: "#CCCCCC",
+            left: 10,
+            font: {
+                fontSize: 17
+            }
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            color: "#CCCCCC",
+            left: 10,
+            font: {
+                fontSize: 34
+            }
+        });
+        _.extend(o, {
+            id: "pageCount"
+        });
+        return o;
+    }());
     $.__views.topBar.add($.__views.pageCount);
-    $.__views.advView2 = Ti.UI.createView({
-        width: "100%",
-        height: 40,
-        bottom: 0,
-        id: "advView2"
-    });
+    $.__views.advView2 = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: "100%",
+            height: 40,
+            bottom: 0
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: "100%",
+            height: 80,
+            bottom: 0
+        });
+        _.extend(o, {
+            id: "advView2"
+        });
+        return o;
+    }());
     $.__views.funcBar.add($.__views.advView2);
     $.__views.imageHolderView = Ti.UI.createView({
         width: "100%",

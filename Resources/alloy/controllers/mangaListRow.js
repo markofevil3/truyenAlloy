@@ -13,22 +13,51 @@ function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     $model = arguments[0] ? arguments[0].$model : null;
     var $ = this, exports = {}, __defers = {};
-    $.__views.row = Ti.UI.createTableViewRow({
-        height: 120,
-        backgroundColor: "transparent",
-        backgroundImage: "/common/bookshelfBackground.png",
-        selectedBackgroundColor: "transparent",
-        layout: "horizontal",
-        id: "row"
-    });
+    $.__views.row = Ti.UI.createTableViewRow(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            height: 120,
+            backgroundColor: "transparent",
+            backgroundImage: "/common/bookshelfBackground.png",
+            selectedBackgroundColor: "transparent",
+            layout: "horizontal"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            height: 240,
+            backgroundColor: "transparent",
+            backgroundImage: "/common/bookshelfBackground.png",
+            selectedBackgroundColor: "transparent",
+            layout: "horizontal"
+        });
+        _.extend(o, {
+            id: "row"
+        });
+        return o;
+    }());
     $.addTopLevelView($.__views.row);
-    $.__views.bookInfoView1 = Ti.UI.createView({
-        width: 90,
-        left: 12.5,
-        layout: "vertical",
-        selectedBackgroundColor: "blue",
-        id: "bookInfoView1"
-    });
+    $.__views.bookInfoView1 = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: 90,
+            left: 12.5,
+            layout: "vertical",
+            selectedBackgroundColor: "blue"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: 220,
+            left: 25,
+            layout: "vertical",
+            selectedBackgroundColor: "blue"
+        });
+        _.extend(o, {
+            id: "bookInfoView1"
+        });
+        return o;
+    }());
     $.__views.row.add($.__views.bookInfoView1);
     $.__views.__alloyId11 = Ti.UI.createView({
         backgroundImage: "/common/bg_paper_tournament.png",
@@ -38,42 +67,88 @@ function Controller() {
         id: "__alloyId11"
     });
     $.__views.bookInfoView1.add($.__views.__alloyId11);
-    $.__views.bookName1 = Ti.UI.createLabel({
-        color: "#fff",
-        font: {
-            fontSize: 13,
-            fontWeight: "bold",
-            fontFamily: "Chalkboard SE"
-        },
-        textAlign: "center",
-        horizontalWrap: !0,
-        id: "bookName1"
-    });
+    $.__views.bookName1 = Ti.UI.createLabel(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            color: "#fff",
+            font: {
+                fontSize: 13,
+                fontWeight: "bold",
+                fontFamily: "Chalkboard SE"
+            },
+            textAlign: "center",
+            horizontalWrap: !0
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            color: "#fff",
+            font: {
+                fontSize: 26,
+                fontWeight: "bold",
+                fontFamily: "Chalkboard SE"
+            },
+            textAlign: "center",
+            horizontalWrap: !0
+        });
+        _.extend(o, {
+            id: "bookName1"
+        });
+        return o;
+    }());
     $.__views.__alloyId11.add($.__views.bookName1);
     $.__views.__alloyId12 = Ti.UI.createView({
-        width: "75%",
+        width: "65%",
         height: "68%",
         backgroundImage: "/common/book2.png",
         id: "__alloyId12"
     });
     $.__views.bookInfoView1.add($.__views.__alloyId12);
-    $.__views.coverLink1 = Ti.UI.createImageView({
-        image: "http://localhost:3000/images/manga/9-faces-of-love/cover.jpg",
-        width: "80%",
-        height: 77,
-        top: 0,
-        left: 9,
-        defaultImage: "/common/default_image.jpg",
-        id: "coverLink1"
-    });
+    $.__views.coverLink1 = Ti.UI.createImageView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: "80%",
+            height: 77,
+            top: 0,
+            left: 9,
+            defaultImage: "/common/default_image.jpg"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: "80%",
+            height: 154,
+            top: 0,
+            left: 18,
+            defaultImage: "/common/default_image.jpg"
+        });
+        _.extend(o, {
+            id: "coverLink1"
+        });
+        return o;
+    }());
     $.__views.__alloyId12.add($.__views.coverLink1);
-    $.__views.bookInfoView2 = Ti.UI.createView({
-        width: 90,
-        left: 12.5,
-        layout: "vertical",
-        selectedBackgroundColor: "blue",
-        id: "bookInfoView2"
-    });
+    $.__views.bookInfoView2 = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: 90,
+            left: 12.5,
+            layout: "vertical",
+            selectedBackgroundColor: "blue"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: 220,
+            left: 25,
+            layout: "vertical",
+            selectedBackgroundColor: "blue"
+        });
+        _.extend(o, {
+            id: "bookInfoView2"
+        });
+        return o;
+    }());
     $.__views.row.add($.__views.bookInfoView2);
     $.__views.__alloyId13 = Ti.UI.createView({
         backgroundImage: "/common/bg_paper_tournament.png",
@@ -83,42 +158,88 @@ function Controller() {
         id: "__alloyId13"
     });
     $.__views.bookInfoView2.add($.__views.__alloyId13);
-    $.__views.bookName2 = Ti.UI.createLabel({
-        color: "#fff",
-        font: {
-            fontSize: 13,
-            fontWeight: "bold",
-            fontFamily: "Chalkboard SE"
-        },
-        textAlign: "center",
-        horizontalWrap: !0,
-        id: "bookName2"
-    });
+    $.__views.bookName2 = Ti.UI.createLabel(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            color: "#fff",
+            font: {
+                fontSize: 13,
+                fontWeight: "bold",
+                fontFamily: "Chalkboard SE"
+            },
+            textAlign: "center",
+            horizontalWrap: !0
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            color: "#fff",
+            font: {
+                fontSize: 26,
+                fontWeight: "bold",
+                fontFamily: "Chalkboard SE"
+            },
+            textAlign: "center",
+            horizontalWrap: !0
+        });
+        _.extend(o, {
+            id: "bookName2"
+        });
+        return o;
+    }());
     $.__views.__alloyId13.add($.__views.bookName2);
     $.__views.__alloyId14 = Ti.UI.createView({
-        width: "75%",
+        width: "65%",
         height: "68%",
         backgroundImage: "/common/book2.png",
         id: "__alloyId14"
     });
     $.__views.bookInfoView2.add($.__views.__alloyId14);
-    $.__views.coverLink2 = Ti.UI.createImageView({
-        image: "http://localhost:3000/images/manga/9-faces-of-love/cover.jpg",
-        width: "80%",
-        height: 77,
-        top: 0,
-        left: 9,
-        defaultImage: "/common/default_image.jpg",
-        id: "coverLink2"
-    });
+    $.__views.coverLink2 = Ti.UI.createImageView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: "80%",
+            height: 77,
+            top: 0,
+            left: 9,
+            defaultImage: "/common/default_image.jpg"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: "80%",
+            height: 154,
+            top: 0,
+            left: 18,
+            defaultImage: "/common/default_image.jpg"
+        });
+        _.extend(o, {
+            id: "coverLink2"
+        });
+        return o;
+    }());
     $.__views.__alloyId14.add($.__views.coverLink2);
-    $.__views.bookInfoView3 = Ti.UI.createView({
-        width: 90,
-        left: 12.5,
-        layout: "vertical",
-        selectedBackgroundColor: "blue",
-        id: "bookInfoView3"
-    });
+    $.__views.bookInfoView3 = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: 90,
+            left: 12.5,
+            layout: "vertical",
+            selectedBackgroundColor: "blue"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: 220,
+            left: 25,
+            layout: "vertical",
+            selectedBackgroundColor: "blue"
+        });
+        _.extend(o, {
+            id: "bookInfoView3"
+        });
+        return o;
+    }());
     $.__views.row.add($.__views.bookInfoView3);
     $.__views.__alloyId15 = Ti.UI.createView({
         backgroundImage: "/common/bg_paper_tournament.png",
@@ -128,34 +249,66 @@ function Controller() {
         id: "__alloyId15"
     });
     $.__views.bookInfoView3.add($.__views.__alloyId15);
-    $.__views.bookName3 = Ti.UI.createLabel({
-        color: "#fff",
-        font: {
-            fontSize: 13,
-            fontWeight: "bold",
-            fontFamily: "Chalkboard SE"
-        },
-        textAlign: "center",
-        horizontalWrap: !0,
-        id: "bookName3"
-    });
+    $.__views.bookName3 = Ti.UI.createLabel(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            color: "#fff",
+            font: {
+                fontSize: 13,
+                fontWeight: "bold",
+                fontFamily: "Chalkboard SE"
+            },
+            textAlign: "center",
+            horizontalWrap: !0
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            color: "#fff",
+            font: {
+                fontSize: 26,
+                fontWeight: "bold",
+                fontFamily: "Chalkboard SE"
+            },
+            textAlign: "center",
+            horizontalWrap: !0
+        });
+        _.extend(o, {
+            id: "bookName3"
+        });
+        return o;
+    }());
     $.__views.__alloyId15.add($.__views.bookName3);
     $.__views.__alloyId16 = Ti.UI.createView({
-        width: "75%",
+        width: "65%",
         height: "68%",
         backgroundImage: "/common/book2.png",
         id: "__alloyId16"
     });
     $.__views.bookInfoView3.add($.__views.__alloyId16);
-    $.__views.coverLink3 = Ti.UI.createImageView({
-        image: "http://localhost:3000/images/manga/9-faces-of-love/cover.jpg",
-        width: "80%",
-        height: 77,
-        top: 0,
-        left: 9,
-        defaultImage: "/common/default_image.jpg",
-        id: "coverLink3"
-    });
+    $.__views.coverLink3 = Ti.UI.createImageView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: "80%",
+            height: 77,
+            top: 0,
+            left: 9,
+            defaultImage: "/common/default_image.jpg"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: "80%",
+            height: 154,
+            top: 0,
+            left: 18,
+            defaultImage: "/common/default_image.jpg"
+        });
+        _.extend(o, {
+            id: "coverLink3"
+        });
+        return o;
+    }());
     $.__views.__alloyId16.add($.__views.coverLink3);
     exports.destroy = function() {};
     _.extend($, $.__views);

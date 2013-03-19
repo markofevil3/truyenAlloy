@@ -108,21 +108,49 @@ function Controller() {
         id: "sortButton"
     });
     $.__views.searchView.add($.__views.sortButton);
-    $.__views.advView = Ti.UI.createView({
-        width: "100%",
-        height: 40,
-        top: 40,
-        id: "advView"
-    });
+    $.__views.advView = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: "100%",
+            height: 40,
+            top: 40
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: "100%",
+            height: 80,
+            top: 40
+        });
+        _.extend(o, {
+            id: "advView"
+        });
+        return o;
+    }());
     $.__views.mangaListWindow.add($.__views.advView);
-    $.__views.bookShellTable = Ti.UI.createTableView({
-        backgroundColor: "transparent",
-        separatorColor: "transparent",
-        style: Ti.UI.iPhone.TableViewStyle.PLAIN,
-        separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-        top: 80,
-        id: "bookShellTable"
-    });
+    $.__views.bookShellTable = Ti.UI.createTableView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            backgroundColor: "transparent",
+            separatorColor: "transparent",
+            style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+            separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+            top: 80
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            backgroundColor: "transparent",
+            separatorColor: "transparent",
+            style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+            separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+            top: 120
+        });
+        _.extend(o, {
+            id: "bookShellTable"
+        });
+        return o;
+    }());
     $.__views.mangaListWindow.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
