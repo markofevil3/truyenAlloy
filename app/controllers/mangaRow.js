@@ -8,6 +8,8 @@ function selectItem(item) {
 		},
 		function(response) {
 			var json = JSON.parse(response);
+			json.data.next = item.next;
+			json.data.prev = item.prev;
 			var mangaReadingController = Alloy.createController('mangaReading', json.data);
 			mangaReadingController.openMainWindow();
 		});
@@ -17,5 +19,7 @@ function selectItem(item) {
 var row = $.row;
 row.chapterId = args.data._id;
 row.mangaId = args.data.mangaId;
+row.next = args.data.next;
+row.prev = args.data.prev;
 $.chapterTitle.text = 'Chapter ' +  args.data.chapter;
 selectItem(row);

@@ -154,7 +154,7 @@ function Controller() {
     $.__views.mangaListWindow.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var MAX_DISPLAY_ROW = 5, search = $.searchButton;
+    var MAX_DISPLAY_ROW = 3, search = $.searchButton;
     exports.openMainWindow = function() {
         Alloy.Globals.CURRENT_TAB.open($.mangaListWindow);
         $.mangaListWindow.leftNavButton = Alloy.Globals.backButton($.mangaListWindow);

@@ -5,7 +5,10 @@ function Controller() {
                 id: item.mangaId,
                 chapter: item.chapterId
             }, function(response) {
-                var json = JSON.parse(response), mangaReadingController = Alloy.createController("mangaReading", json.data);
+                var json = JSON.parse(response);
+                json.data.next = item.next;
+                json.data.prev = item.prev;
+                var mangaReadingController = Alloy.createController("mangaReading", json.data);
                 mangaReadingController.openMainWindow();
             });
         });
@@ -66,6 +69,8 @@ function Controller() {
     var args = arguments[0] || {}, row = $.row;
     row.chapterId = args.data._id;
     row.mangaId = args.data.mangaId;
+    row.next = args.data.next;
+    row.prev = args.data.prev;
     $.chapterTitle.text = "Chapter " + args.data.chapter;
     selectItem(row);
     _.extend($, exports);

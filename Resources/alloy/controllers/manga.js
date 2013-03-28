@@ -10,6 +10,12 @@ function Controller() {
         }
         return dataSet;
     }
+    function getNextPrevChapter(data) {
+        for (var i = 0; i < data.length; i++) {
+            data[i - 1] && (data[i].next = data[i - 1]._id);
+            data[i + 1] && (data[i].prev = data[i + 1]._id);
+        }
+    }
     function getNewestChapter(chapters) {
         var newest = 0;
         for (var i = 0; i < chapters.length; i++) chapters[i].chapter > newest && (newest = chapters[i].chapter);
@@ -31,6 +37,7 @@ function Controller() {
             var nextRowIndex = lastRowIndex - 1 + MAX_DISPLAY_ROW;
             nextRowIndex > data.length && (nextRowIndex = data.length);
             for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
+                data[i].mangaId = args._id;
                 var row = Alloy.createController("mangaRow", {
                     data: data[i]
                 }).getView();
@@ -308,7 +315,7 @@ function Controller() {
     $.__views.mangaWindow.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var args = arguments[0] || {}, MAX_DISPLAY_ROW = 20, table = $.bookShellTable, search = $.searchButton;
+    var args = arguments[0] || {}, MAX_DISPLAY_ROW = 15, table = $.bookShellTable, search = $.searchButton;
     exports.openMainWindow = function() {
         Alloy.Globals.CURRENT_TAB.open($.mangaWindow);
         $.mangaWindow.leftNavButton = Alloy.Globals.backButton($.mangaWindow);
@@ -346,6 +353,7 @@ function Controller() {
             });
         });
         var listChapters = args.chapters;
+        getNextPrevChapter(listChapters);
         args.favorite ? $.mangaWindow.rightNavButton = favoritedButton : $.mangaWindow.rightNavButton = favoriteButton;
         $.mangaWindow.title = args.title;
         $.bookCover.image = Alloy.Globals.SERVER + args.folder + "/cover.jpg";

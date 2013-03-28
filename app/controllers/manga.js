@@ -1,5 +1,5 @@
 var args = arguments[0] || {};
-var MAX_DISPLAY_ROW = 20;
+var MAX_DISPLAY_ROW = 15;
 var table = $.bookShellTable;
 var search = $.searchButton;
 
@@ -53,6 +53,7 @@ exports.openMainWindow = function() {
 		}
 	});
 	var listChapters = args.chapters;
+	getNextPrevChapter(listChapters);
 	if (args.favorite) {
 		$.mangaWindow.rightNavButton = favoritedButton;
 	} else {
@@ -127,6 +128,17 @@ function setRowData(data, maxRow) {
 	return dataSet;
 };
 
+function getNextPrevChapter(data) {
+	for (var i = 0; i < data.length; i++) {
+		if (data[i - 1]) {
+			data[i].next = data[i - 1]._id;
+		}
+		if (data[i + 1]) {
+			data[i].prev = data[i + 1]._id;
+		}
+	}
+}
+
 function getNewestChapter(chapters) {
 	var newest = 0;
 	for (var i = 0; i < chapters.length; i++) {
@@ -165,6 +177,7 @@ function dynamicLoad(tableView, data) {
 			nextRowIndex = data.length;
 		}
 		for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
+			data[i].mangaId = args._id;
 			var row = Alloy.createController('mangaRow', {data: data[i]}).getView();
 			// selectItem(row);
 			tableView.appendRow(row, { animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE });

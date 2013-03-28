@@ -31,7 +31,7 @@ function Controller() {
             var image = Ti.UI.createImageView({
                 image: Alloy.Globals.SERVER + listImages[i],
                 width: "100%",
-                height: "100%"
+                height: "auto"
             }), scrollView = Ti.UI.createScrollView({
                 contentWidth: "100%",
                 contentHeight: "100%",
@@ -50,6 +50,37 @@ function Controller() {
             $.imageHolderView.add(scrollView);
             maxZindex--;
         }
+        var lastView = Ti.UI.createScrollView({
+            contentWidth: "100%",
+            contentHeight: "100%",
+            backgroundColor: "#000",
+            showVerticalScrollIndicator: !0,
+            showHorizontalScrollIndicator: !0,
+            height: "100%",
+            width: "100%",
+            zIndex: maxZindex + 1,
+            index: listImages.length,
+            maxZoomScale: 3,
+            minZoomScale: 1
+        });
+        if (args.prev) {
+            console.log("has prev");
+            var prevButton = Ti.UI.createButton({
+                title: "Chapter Sau",
+                font: {
+                    fontSize: "20dp",
+                    fontWeight: "bold"
+                },
+                top: "5dp",
+                height: "40dp",
+                width: "40dp",
+                right: "5dp"
+            });
+            lastView.add(prevButton);
+        }
+        args.next && console.log("has next");
+        images.push(lastView);
+        $.imageHolderView.add(lastView);
     }
     function changePage() {
         $.mangaReadingWindow.addEventListener("swipe", function(e) {
@@ -62,7 +93,7 @@ function Controller() {
                 }, function() {
                     nextImage.show();
                     currentPage = nextImage;
-                    pageCount.text = currentPage.index + 1 + "/" + listImages.length;
+                    pageCount.text = currentPage.index + 1 + "/" + (listImages.length + 1);
                 });
             }
             if (e.direction == "right") {
@@ -75,7 +106,7 @@ function Controller() {
                     });
                     nextImage.show();
                     currentPage = nextImage;
-                    pageCount.text = nextImage.index + "/" + listImages.length;
+                    pageCount.text = nextImage.index + "/" + (listImages.length + 1);
                 }
             }
         });

@@ -49,7 +49,7 @@ function addImageView() {
 		var image = Ti.UI.createImageView({
 			image: Alloy.Globals.SERVER + listImages[i],
 			width: '100%',
-			height: '100%',
+			height: 'auto',
 		});
 		var scrollView = Ti.UI.createScrollView({
 		  contentWidth: '100%',
@@ -80,7 +80,7 @@ function changePage() {
 				$.imageHolderView.animate({ view: nextImage, transition: Ti.UI.iPhone.AnimationStyle.CURL_UP, duration: 500 }, function() {
 					nextImage.show();
 					currentPage = nextImage;
-					pageCount.text = (currentPage.index + 1) + '/' + listImages.length;
+					pageCount.text = (currentPage.index + 1) + '/' + (listImages.length);
 				});
 			}
 		}
@@ -90,7 +90,7 @@ function changePage() {
 				$.imageHolderView.animate({ view: nextImage, transition: Ti.UI.iPhone.AnimationStyle.CURL_DOWN, duration: 500 });
 				nextImage.show();
 				currentPage = nextImage;
-				pageCount.text = nextImage.index + '/' + listImages.length;
+				pageCount.text = nextImage.index + '/' + (listImages.length);
 			}
 		}
 	});
