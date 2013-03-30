@@ -17,6 +17,10 @@ Alloy.Globals.CURRENT_TAB = null;
 Titanium.Facebook.appid = "514307815249030";
 Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
 
+function log(para) {
+	Ti.API.debug(JSON.stringify(para));
+};
+
 Alloy.Globals.isTablet = function() {
 	var osname = Ti.Platform.osname,
 	version = Ti.Platform.version,

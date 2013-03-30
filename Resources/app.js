@@ -1,3 +1,7 @@
+function log(para) {
+    Ti.API.debug(JSON.stringify(para));
+}
+
 function isHash(obj) {
     return obj.constructor == Object;
 }

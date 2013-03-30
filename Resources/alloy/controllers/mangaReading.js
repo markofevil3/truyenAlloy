@@ -1,4 +1,29 @@
 function Controller() {
+    function SetChangeChapterButtons(next, prev) {
+        if (next != null) {
+            $.nextButton.visible = !0;
+            $.nextButton.chapterId = next;
+        }
+        if (prev != null) {
+            $.prevButton.visible = !0;
+            $.prevButton.chapterId = prev;
+        }
+    }
+    function changeChapter(e) {
+        log(e.source.chapterId);
+        Alloy.Globals.getAjax("/mangaReading", {
+            id: args.mangaId,
+            chapter: e.source.chapterId
+        }, function(response) {
+            var json = JSON.parse(response);
+            json.data.next = json.nextPrevChapters.next;
+            json.data.prev = json.nextPrevChapters.prev;
+            json.data.mangaId = args.mangaId;
+            closeWindowNoAnimation();
+            var mangaReadingController = Alloy.createController("mangaReading", json.data);
+            mangaReadingController.openMainWindow();
+        });
+    }
     function hideFuncBar() {
         $.funcBar.hide();
         $.funcBar.opacity = 0;
@@ -16,6 +41,9 @@ function Controller() {
                 duration: 1000
             }, function() {});
         }
+    }
+    function closeWindowNoAnimation() {
+        $.mangaReadingWindow.close();
     }
     function closeWindow() {
         var smallDown = Titanium.UI.create2DMatrix();
@@ -50,37 +78,6 @@ function Controller() {
             $.imageHolderView.add(scrollView);
             maxZindex--;
         }
-        var lastView = Ti.UI.createScrollView({
-            contentWidth: "100%",
-            contentHeight: "100%",
-            backgroundColor: "#000",
-            showVerticalScrollIndicator: !0,
-            showHorizontalScrollIndicator: !0,
-            height: "100%",
-            width: "100%",
-            zIndex: maxZindex + 1,
-            index: listImages.length,
-            maxZoomScale: 3,
-            minZoomScale: 1
-        });
-        if (args.prev) {
-            console.log("has prev");
-            var prevButton = Ti.UI.createButton({
-                title: "Chapter Sau",
-                font: {
-                    fontSize: "20dp",
-                    fontWeight: "bold"
-                },
-                top: "5dp",
-                height: "40dp",
-                width: "40dp",
-                right: "5dp"
-            });
-            lastView.add(prevButton);
-        }
-        args.next && console.log("has next");
-        images.push(lastView);
-        $.imageHolderView.add(lastView);
     }
     function changePage() {
         $.mangaReadingWindow.addEventListener("swipe", function(e) {
@@ -93,7 +90,7 @@ function Controller() {
                 }, function() {
                     nextImage.show();
                     currentPage = nextImage;
-                    pageCount.text = currentPage.index + 1 + "/" + (listImages.length + 1);
+                    pageCount.text = currentPage.index + 1 + "/" + listImages.length;
                 });
             }
             if (e.direction == "right") {
@@ -106,7 +103,7 @@ function Controller() {
                     });
                     nextImage.show();
                     currentPage = nextImage;
-                    pageCount.text = nextImage.index + "/" + (listImages.length + 1);
+                    pageCount.text = nextImage.index + "/" + listImages.length;
                 }
             }
         });
@@ -240,6 +237,54 @@ function Controller() {
         return o;
     }());
     $.__views.topBar.add($.__views.pageCount);
+    $.__views.buttonBar = Ti.UI.createView({
+        top: 50,
+        height: Titanium.UI.SIZE,
+        id: "buttonBar"
+    });
+    $.__views.funcBar.add($.__views.buttonBar);
+    $.__views.prevButton = Ti.UI.createButton({
+        width: 120,
+        height: 30,
+        font: {
+            fontWeight: "bold",
+            fontSize: 14
+        },
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#ffffff",
+        backgroundColor: "#222",
+        backgroundImage: "NONE",
+        selectedColor: "#333",
+        color: "#CCCCCC",
+        left: 10,
+        visible: !1,
+        id: "prevButton",
+        title: "Chapter Trước"
+    });
+    $.__views.buttonBar.add($.__views.prevButton);
+    changeChapter ? $.__views.prevButton.addEventListener("click", changeChapter) : __defers["$.__views.prevButton!click!changeChapter"] = !0;
+    $.__views.nextButton = Ti.UI.createButton({
+        width: 120,
+        height: 30,
+        font: {
+            fontWeight: "bold",
+            fontSize: 14
+        },
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#ffffff",
+        backgroundColor: "#222",
+        backgroundImage: "NONE",
+        selectedColor: "#333",
+        color: "#CCCCCC",
+        right: 10,
+        visible: !1,
+        id: "nextButton",
+        title: "Chapter Sau"
+    });
+    $.__views.buttonBar.add($.__views.nextButton);
+    changeChapter ? $.__views.nextButton.addEventListener("click", changeChapter) : __defers["$.__views.nextButton!click!changeChapter"] = !0;
     $.__views.advView2 = Ti.UI.createView(function() {
         var o = {};
         _.extend(o, {});
@@ -277,6 +322,8 @@ function Controller() {
         Alloy.Globals.adv(3, function(advImage) {
             $.advView2.add(advImage);
         });
+        log(args);
+        SetChangeChapterButtons(args.next, args.prev);
         hideFuncBar();
         addImageView();
         currentPage = images[0];
@@ -287,6 +334,8 @@ function Controller() {
         });
     };
     __defers["$.__views.closeButton!click!closeWindow"] && $.__views.closeButton.addEventListener("click", closeWindow);
+    __defers["$.__views.prevButton!click!changeChapter"] && $.__views.prevButton.addEventListener("click", changeChapter);
+    __defers["$.__views.nextButton!click!changeChapter"] && $.__views.nextButton.addEventListener("click", changeChapter);
     _.extend($, exports);
 }
 

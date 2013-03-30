@@ -12,6 +12,7 @@ exports.openMainWindow = function() {
 	Alloy.Globals.adv(3, function(advImage) {
 		$.advView2.add(advImage);
 	});
+	SetChangeChapterButtons(args.next, args.prev);
 	hideFuncBar();
 	addImageView();
 	currentPage = images[0];
@@ -19,6 +20,33 @@ exports.openMainWindow = function() {
 	$.mangaReadingWindow.addEventListener('singletap', showFuncBar);
 	$.mangaReadingWindow.open({ transition: Ti.UI.iPhone.AnimationStyle.CURL_UP });
 };
+
+function SetChangeChapterButtons(next, prev) {
+	if (next != null) {
+		$.nextButton.visible = true;
+		$.nextButton.chapterId = next;
+	}
+	if (prev != null) {
+		$.prevButton.visible = true;
+		$.prevButton.chapterId = prev;
+	}
+}
+
+function changeChapter(e) {
+	Alloy.Globals.getAjax('/mangaReading', {
+		'id': args.mangaId,
+		'chapter': e.source.chapterId
+	},
+	function(response) {
+		var json = JSON.parse(response);
+		json.data.next = json.nextPrevChapters.next;
+		json.data.prev = json.nextPrevChapters.prev;
+		json.data.mangaId = args.mangaId;
+		closeWindowNoAnimation();
+		var mangaReadingController = Alloy.createController('mangaReading', json.data);
+		mangaReadingController.openMainWindow();
+	});
+}
 
 function hideFuncBar() {
 	$.funcBar.hide();
@@ -35,6 +63,10 @@ function showFuncBar() {
 		$.funcBar.animate({opacity: 1, duration: 1000}, function() {
 		});
 	}
+}
+
+function closeWindowNoAnimation() {
+	$.mangaReadingWindow.close();
 }
 
 function closeWindow() {

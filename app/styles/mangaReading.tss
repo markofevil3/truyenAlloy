@@ -17,6 +17,30 @@
 	height: 80,
 	top: 0,
 },
+"#buttonBar": {
+	top: 50,
+	height: Titanium.UI.SIZE
+},
+".changeButtons": {
+	width: 120,
+	height: 30,
+	font: { fontWeight: 'bold', fontSize: 14 },
+	borderRadius: 5,
+	borderWidth: 1,
+	borderColor: '#ffffff',
+	backgroundColor: '#222',
+	backgroundImage: 'NONE',
+	selectedColor: '#333',
+	color: '#CCCCCC'
+},
+"#prevButton": {
+	left: 10,
+	visible: false
+},
+"#nextButton": {
+	right: 10,
+	visible: false
+},
 "#closeButton[platform=ios formFactor=handheld]": {
 	title: 'close',
 	width: 60,
