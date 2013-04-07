@@ -93,7 +93,7 @@ function setRowData(data) {
 				rowData.push(data[index]);
 			}
 		}
-		var row = Alloy.createController('mangaListRow', {data: rowData}).getView();
+		var row = Alloy.createController('mangaListRow', {data: rowData, window: $.mangaListWindow}).getView();
 		dataSet.push(row);
 	}
 	return dataSet;

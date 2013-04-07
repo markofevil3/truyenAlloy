@@ -17,7 +17,7 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: "100%",
-            height: 40,
+            height: 50,
             backgroundColor: "#fff",
             selectedBackgroundColor: "transparent",
             name: "Advertise"
@@ -25,7 +25,7 @@ function Controller() {
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 80,
+            height: 66,
             backgroundColor: "#fff",
             selectedBackgroundColor: "transparent",
             name: "Advertise"

@@ -9,7 +9,8 @@ function Controller() {
                 data[index] && rowData.push(data[index]);
             }
             var row = Alloy.createController("mangaListRow", {
-                data: rowData
+                data: rowData,
+                window: $.mangaListWindow
             }).getView();
             dataSet.push(row);
         }
@@ -113,13 +114,13 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: "100%",
-            height: 40,
+            height: 50,
             top: 40
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 80,
+            height: 100,
             top: 40
         });
         _.extend(o, {
@@ -136,7 +137,7 @@ function Controller() {
             separatorColor: "transparent",
             style: Ti.UI.iPhone.TableViewStyle.PLAIN,
             separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-            top: 80
+            top: 90
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
@@ -144,7 +145,7 @@ function Controller() {
             separatorColor: "transparent",
             style: Ti.UI.iPhone.TableViewStyle.PLAIN,
             separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-            top: 120
+            top: 130
         });
         _.extend(o, {
             id: "bookShellTable"

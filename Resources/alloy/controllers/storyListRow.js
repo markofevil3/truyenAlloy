@@ -1,18 +1,21 @@
 function Controller() {
     function selectItem(item) {
         item.addEventListener("click", function(e) {
+            Alloy.Globals.openLoading(args.window);
             item.dataType == 0 ? Alloy.Globals.getAjax("/getStoryContent", {
                 id: item.dataId,
                 type: item.dataType,
                 chapter: item.dataChapterId
             }, function(response) {
                 var json = JSON.parse(response), storyReadingController = Alloy.createController("storyReading", json.data);
+                Alloy.Globals.closeLoading(args.window);
                 storyReadingController.openMainWindow();
             }) : Alloy.Globals.getAjax("/getStory", {
                 id: item.dataId,
                 userId: Titanium.Facebook.getUid()
             }, function(response) {
                 var json = JSON.parse(response), storyController = Alloy.createController("story", json.data);
+                Alloy.Globals.closeLoading(args.window);
                 storyController.openMainWindow();
             });
         });
@@ -90,13 +93,13 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    $.row.dataId = args._id;
-    $.row.dataType = args.type;
+    $.row.dataId = args.data._id;
+    $.row.dataType = args.data.type;
     $.bookCover.image = Alloy.Globals.SERVER + "/images/story/sample/cover.jpg";
-    $.storyTitle.text = args.title;
-    $.storyAuthor.text = "Tác giả: " + args.author;
-    $.storyType.text = "Thể loại: " + getTypeText(args.type);
-    $.bookCoverView.backgroundImage = args.type == 0 ? "/common/book5.png" : "/common/book5.png";
+    $.storyTitle.text = args.data.title;
+    $.storyAuthor.text = "Tác giả: " + args.data.author;
+    $.storyType.text = "Thể loại: " + getTypeText(args.data.type);
+    $.bookCoverView.backgroundImage = args.data.type == 0 ? "/common/book5.png" : "/common/book5.png";
     selectItem($.row);
     _.extend($, exports);
 }

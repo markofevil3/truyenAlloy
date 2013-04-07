@@ -1,6 +1,11 @@
 "#mangaWindow": {
 	backgroundImage: '/common/setting_bg.png',
 	barImage: '/common/top.png',
+},
+"#wrapper": {
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.FILL,
+	top: 0,
 	layout: 'vertical'
 },
 "#mangaInfoView[platform=ios formFactor=handheld]": {
@@ -92,9 +97,9 @@
 },
 "#advView[platform=ios formFactor=handheld]": {
 	width: '100%',
-	height: 40,
+	height: 50,
 },
 "#advView[platform=ios formFactor=tablet]": {
 	width: '100%',
-	height: 80,
+	height: 100,
 }

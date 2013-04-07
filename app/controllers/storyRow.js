@@ -2,6 +2,7 @@ var args = arguments[0] || {};
 
 function selectItem(item) {
 	item.addEventListener('click', function(e) {
+		Alloy.Globals.openLoading(args.window);
 		Alloy.Globals.getAjax('/getStoryContent', {
 			'id': item.dataId,
 			'type': item.dataType,
@@ -10,6 +11,7 @@ function selectItem(item) {
 		function(response) {
 			var json = JSON.parse(response);
 			var storyReadingController = Alloy.createController('storyReading', json.data);
+			Alloy.Globals.closeLoading(args.window);
 			storyReadingController.openMainWindow();
 		});
 	});

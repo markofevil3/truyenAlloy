@@ -1,6 +1,7 @@
 function Controller() {
     function selectItem(item, type) {
         item.addEventListener("click", function(e) {
+            Alloy.Globals.openLoading(args.window);
             if (type == 0) {
                 console.log("manga");
                 Alloy.Globals.getAjax("/manga", {
@@ -8,6 +9,7 @@ function Controller() {
                     userId: Titanium.Facebook.getUid()
                 }, function(response) {
                     var json = JSON.parse(response), mangaController = Alloy.createController("manga", json.data);
+                    Alloy.Globals.closeLoading(args.window);
                     mangaController.openMainWindow();
                 });
             } else Alloy.Globals.getAjax("/getStory", {
@@ -15,6 +17,7 @@ function Controller() {
                 userId: Titanium.Facebook.getUid()
             }, function(response) {
                 var json = JSON.parse(response), storyController = Alloy.createController("story", json.data);
+                Alloy.Globals.closeLoading(args.window);
                 storyController.openMainWindow();
             });
         });
@@ -97,16 +100,16 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    $.row.dataId = args._id;
-    $.row.dataType = args.bookType;
+    $.row.dataId = args.data._id;
+    $.row.dataType = args.data.bookType;
     var coverLink;
-    args.bookType == 0 ? coverLink = Alloy.Globals.SERVER + args.folder + "/cover.jpg" : coverLink = Alloy.Globals.SERVER + "/images/story/sample/cover.jpg";
+    args.data.bookType == 0 ? coverLink = Alloy.Globals.SERVER + args.data.folder + "/cover.jpg" : coverLink = Alloy.Globals.SERVER + "/images/story/sample/cover.jpg";
     $.bookCover.image = coverLink;
-    $.bookTitle.text = args.title;
-    $.newestChapter.text = "Newest: " + args.chapters[args.chapters.length - 1].chapter;
-    $.bookType.text = "Thể loại: " + getTypeText(args.bookType);
-    $.bookCoverView.backgroundImage = args.bookType == 0 ? "/common/book5.png" : "/common/book5.png";
-    selectItem($.row, args.bookType);
+    $.bookTitle.text = args.data.title;
+    $.newestChapter.text = "Newest: " + args.data.chapters[args.data.chapters.length - 1].chapter;
+    $.bookType.text = "Thể loại: " + getTypeText(args.data.bookType);
+    $.bookCoverView.backgroundImage = args.data.bookType == 0 ? "/common/book5.png" : "/common/book5.png";
+    selectItem($.row, args.data.bookType);
     _.extend($, exports);
 }
 

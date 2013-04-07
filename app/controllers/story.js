@@ -35,7 +35,7 @@ exports.openMainWindow = function() {
 			Titanium.Facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
-					Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+					Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, args.title, Alloy.Globals.SERVER + args.folder + '/cover.jpg', function() {
 						$.storyWindow.rightNavButton = favoritedButton;
 					});
 		    } else if (e.error) {
@@ -46,7 +46,7 @@ exports.openMainWindow = function() {
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				Util.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+				Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
 					$.storyWindow.rightNavButton = favoritedButton;
 				});
 			});
@@ -121,7 +121,7 @@ function setRowData(data, maxRow) {
 	for (var i = 0; i < maxRow; i++) {
 		if (data[i]) {
 			data[i].storyId = args._id;
-			var row = Alloy.createController('storyRow', {data: data[i]}).getView();
+			var row = Alloy.createController('storyRow', {data: data[i], window: $.storyWindow}).getView();
 			dataSet.push(row);
 		}
 	}

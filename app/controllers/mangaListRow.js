@@ -13,6 +13,7 @@ for (var i = 0; i < 3; i++) {
 
 function selectItem(item) {
 	item.addEventListener('click', function(e) {
+		Alloy.Globals.openLoading(args.window);
 		Alloy.Globals.getAjax('/manga', {
 			'id': item.dataId,
 			'userId': Titanium.Facebook.getUid()
@@ -20,6 +21,7 @@ function selectItem(item) {
 		function(response) {
 			var json = JSON.parse(response);
 			var mangaController = Alloy.createController('manga', json.data);
+			Alloy.Globals.closeLoading(args.window);
 			mangaController.openMainWindow();
 		});
 	});

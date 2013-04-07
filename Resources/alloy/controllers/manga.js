@@ -4,7 +4,8 @@ function Controller() {
         for (var i = 0; i < maxRow; i++) if (data[i]) {
             data[i].mangaId = args._id;
             var row = Alloy.createController("mangaRow", {
-                data: data[i]
+                data: data[i],
+                window: $.mangaWindow
             }).getView();
             dataSet.push(row);
         }
@@ -76,10 +77,17 @@ function Controller() {
     $.__views.mangaWindow = Ti.UI.createWindow({
         backgroundImage: "/common/setting_bg.png",
         barImage: "/common/top.png",
-        layout: "vertical",
         id: "mangaWindow"
     });
     $.addTopLevelView($.__views.mangaWindow);
+    $.__views.wrapper = Ti.UI.createView({
+        width: Titanium.UI.FILL,
+        height: Titanium.UI.FILL,
+        top: 0,
+        layout: "vertical",
+        id: "wrapper"
+    });
+    $.__views.mangaWindow.add($.__views.wrapper);
     $.__views.mangaInfoView = Ti.UI.createView(function() {
         var o = {};
         _.extend(o, {});
@@ -103,7 +111,7 @@ function Controller() {
         });
         return o;
     }());
-    $.__views.mangaWindow.add($.__views.mangaInfoView);
+    $.__views.wrapper.add($.__views.mangaInfoView);
     $.__views.bookBackgroundView = Ti.UI.createView({
         width: "25%",
         height: "86%",
@@ -264,7 +272,7 @@ function Controller() {
         top: 0,
         id: "searchView"
     });
-    $.__views.mangaWindow.add($.__views.searchView);
+    $.__views.wrapper.add($.__views.searchView);
     $.__views.searchButton = Ti.UI.createSearchBar({
         barColor: "transparent",
         backgroundImage: "/common/setting_bg.png",
@@ -292,19 +300,19 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: "100%",
-            height: 40
+            height: 50
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 80
+            height: 100
         });
         _.extend(o, {
             id: "advView"
         });
         return o;
     }());
-    $.__views.mangaWindow.add($.__views.advView);
+    $.__views.wrapper.add($.__views.advView);
     $.__views.bookShellTable = Ti.UI.createTableView({
         backgroundColor: "transparent",
         separatorColor: "transparent",
@@ -312,7 +320,7 @@ function Controller() {
         separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
         id: "bookShellTable"
     });
-    $.__views.mangaWindow.add($.__views.bookShellTable);
+    $.__views.wrapper.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {}, MAX_DISPLAY_ROW = 15, table = $.bookShellTable, search = $.searchButton;
@@ -342,12 +350,13 @@ function Controller() {
             if (Titanium.Facebook.loggedIn == 0) {
                 Ti.Facebook.authorize();
                 Titanium.Facebook.addEventListener("login", function(e) {
-                    e.success ? Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+                    e.success ? Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, args.title, Alloy.Globals.SERVER + args.folder + "/cover.jpg", function() {
                         $.mangaWindow.rightNavButton = favoritedButton;
                     }) : e.error ? alert(e.error) : e.cancelled && alert("Cancelled");
                 });
             } else Titanium.Facebook.requestWithGraphPath("/" + Titanium.Facebook.getUid(), {}, "GET", function(user) {
-                Util.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+                log(user);
+                Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
                     $.mangaWindow.rightNavButton = favoritedButton;
                 });
             });

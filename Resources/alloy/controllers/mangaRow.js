@@ -1,6 +1,8 @@
 function Controller() {
     function selectItem(item) {
         item.addEventListener("click", function(e) {
+            Alloy.Globals.openLoading(args.window);
+            log(args.window);
             Alloy.Globals.getAjax("/mangaReading", {
                 id: item.mangaId,
                 chapter: item.chapterId
@@ -10,6 +12,7 @@ function Controller() {
                 json.data.prev = json.nextPrevChapters.prev;
                 json.data.mangaId = item.mangaId;
                 var mangaReadingController = Alloy.createController("mangaReading", json.data);
+                Alloy.Globals.closeLoading(args.window);
                 mangaReadingController.openMainWindow();
             });
         });

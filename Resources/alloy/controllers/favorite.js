@@ -3,7 +3,10 @@ function Controller() {
         var dataSet = [];
         for (var i = 0; i < data.length; i++) {
             data[i].bookType = type;
-            var row = Alloy.createController("favoriteRow", data[i]).getView();
+            var row = Alloy.createController("favoriteRow", {
+                data: data[i],
+                window: $.favoriteWindow
+            }).getView();
             dataSet.push(row);
         }
         return dataSet;
@@ -37,10 +40,17 @@ function Controller() {
     $.__views.favoriteWindow = Ti.UI.createWindow({
         backgroundImage: "/common/setting_bg.png",
         barImage: "/common/top.png",
-        layout: "vertical",
         id: "favoriteWindow",
         title: "Favorites"
     });
+    $.__views.wrapper = Ti.UI.createView({
+        width: Titanium.UI.FILL,
+        height: Titanium.UI.FILL,
+        top: 0,
+        layout: "vertical",
+        id: "wrapper"
+    });
+    $.__views.favoriteWindow.add($.__views.wrapper);
     $.__views.filterTabbar = Ti.UI.iOS.createTabbedBar({
         labels: [ "Tất Cả", "Truyện Tranh", "Truyện Chữ" ],
         index: 0,
@@ -50,13 +60,13 @@ function Controller() {
         top: 0,
         id: "filterTabbar"
     });
-    $.__views.favoriteWindow.add($.__views.filterTabbar);
+    $.__views.wrapper.add($.__views.filterTabbar);
     $.__views.advView = Ti.UI.createView({
         width: "100%",
-        height: 40,
+        height: 50,
         id: "advView"
     });
-    $.__views.favoriteWindow.add($.__views.advView);
+    $.__views.wrapper.add($.__views.advView);
     $.__views.bookShellTable = Ti.UI.createTableView({
         editable: !0,
         allowsSelectionDuringEditing: !0,
@@ -67,7 +77,7 @@ function Controller() {
         separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
         id: "bookShellTable"
     });
-    $.__views.favoriteWindow.add($.__views.bookShellTable);
+    $.__views.wrapper.add($.__views.bookShellTable);
     $.__views.favoriteTab = Ti.UI.createTab({
         window: $.__views.favoriteWindow,
         id: "favoriteTab",

@@ -6,6 +6,7 @@
     <property name="acs-oauth-secret-production" type="string">UtGAqYwsC40vbOmgBpSyTSnfuzh9IfeX</property>
     <property name="acs-oauth-key-production" type="string">aBenIKuc622pSjggiQZKs05FaQzDEysZ</property>
     <property name="acs-api-key-production" type="string">gSD9u36EE0SYRAXowTzUopBwefPKeCCg</property>
+    <!-- <property name="ti.facebook.appid">514307815249030</property> -->
     <id>com.cokhithuyluc.truyenAlloy</id>
     <name>truyenAlloy</name>
     <version>1.0</version>
@@ -46,6 +47,8 @@
     <modules>
         <module platform="commonjs">ti.cloud</module>
         <module platform="android" version="1.0">ti.physicalSizeCategory</module>
+        <!-- <module platform="android">facebook</module> -->
+        <!-- <module platform="iphone">facebook</module> -->
     </modules>
     <deployment-targets>
         <target device="android">true</target>

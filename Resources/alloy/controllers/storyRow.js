@@ -1,12 +1,14 @@
 function Controller() {
     function selectItem(item) {
         item.addEventListener("click", function(e) {
+            Alloy.Globals.openLoading(args.window);
             Alloy.Globals.getAjax("/getStoryContent", {
                 id: item.dataId,
                 type: item.dataType,
                 chapter: item.dataChapterId
             }, function(response) {
                 var json = JSON.parse(response), storyReadingController = Alloy.createController("storyReading", json.data);
+                Alloy.Globals.closeLoading(args.window);
                 storyReadingController.openMainWindow();
             });
         });

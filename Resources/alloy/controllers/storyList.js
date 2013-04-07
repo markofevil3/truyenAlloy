@@ -2,7 +2,10 @@ function Controller() {
     function setRowData(data) {
         var dataSet = [];
         for (var i = 0; i < data.length; i++) {
-            var row = Alloy.createController("storyListRow", data[i]).getView();
+            var row = Alloy.createController("storyListRow", {
+                data: data[i],
+                window: $.storyListWindow
+            }).getView();
             dataSet.push(row);
         }
         return dataSet;
@@ -126,7 +129,7 @@ function Controller() {
     $.__views.searchView.add($.__views.sortButton);
     $.__views.advView = Ti.UI.createView({
         width: "100%",
-        height: 40,
+        height: 50,
         top: 40,
         id: "advView"
     });
@@ -136,7 +139,7 @@ function Controller() {
         separatorColor: "transparent",
         style: Ti.UI.iPhone.TableViewStyle.PLAIN,
         separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-        top: 80,
+        top: 100,
         id: "bookShellTable"
     });
     $.__views.storyListWindow.add($.__views.bookShellTable);

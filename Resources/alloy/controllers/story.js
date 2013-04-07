@@ -4,7 +4,8 @@ function Controller() {
         for (var i = 0; i < maxRow; i++) if (data[i]) {
             data[i].storyId = args._id;
             var row = Alloy.createController("storyRow", {
-                data: data[i]
+                data: data[i],
+                window: $.storyWindow
             }).getView();
             dataSet.push(row);
         }
@@ -69,10 +70,17 @@ function Controller() {
     $.__views.storyWindow = Ti.UI.createWindow({
         backgroundImage: "/common/setting_bg.png",
         barImage: "/common/top.png",
-        layout: "vertical",
         id: "storyWindow"
     });
     $.addTopLevelView($.__views.storyWindow);
+    $.__views.wrapper = Ti.UI.createView({
+        width: Titanium.UI.FILL,
+        height: Titanium.UI.FILL,
+        top: 0,
+        layout: "vertical",
+        id: "wrapper"
+    });
+    $.__views.storyWindow.add($.__views.wrapper);
     $.__views.storyInfoView = Ti.UI.createView({
         width: "100%",
         height: 120,
@@ -81,7 +89,7 @@ function Controller() {
         layout: "horizontal",
         id: "storyInfoView"
     });
-    $.__views.storyWindow.add($.__views.storyInfoView);
+    $.__views.wrapper.add($.__views.storyInfoView);
     $.__views.bookBackgroundView = Ti.UI.createView({
         width: "25%",
         height: "86%",
@@ -147,7 +155,7 @@ function Controller() {
         top: 0,
         id: "searchView"
     });
-    $.__views.storyWindow.add($.__views.searchView);
+    $.__views.wrapper.add($.__views.searchView);
     $.__views.searchButton = Ti.UI.createSearchBar({
         barColor: "transparent",
         backgroundImage: "/common/setting_bg.png",
@@ -172,10 +180,10 @@ function Controller() {
     $.__views.searchView.add($.__views.sortButton);
     $.__views.advView = Ti.UI.createView({
         width: "100%",
-        height: 40,
+        height: 50,
         id: "advView"
     });
-    $.__views.storyWindow.add($.__views.advView);
+    $.__views.wrapper.add($.__views.advView);
     $.__views.bookShellTable = Ti.UI.createTableView({
         backgroundColor: "transparent",
         separatorColor: "transparent",
@@ -183,7 +191,7 @@ function Controller() {
         separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
         id: "bookShellTable"
     });
-    $.__views.storyWindow.add($.__views.bookShellTable);
+    $.__views.wrapper.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {}, MAX_DISPLAY_ROW = 20, table = $.bookShellTable, search = $.searchButton;
@@ -213,12 +221,12 @@ function Controller() {
             if (Titanium.Facebook.loggedIn == 0) {
                 Ti.Facebook.authorize();
                 Titanium.Facebook.addEventListener("login", function(e) {
-                    e.success ? Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+                    e.success ? Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, args.title, Alloy.Globals.SERVER + args.folder + "/cover.jpg", function() {
                         $.storyWindow.rightNavButton = favoritedButton;
                     }) : e.error ? alert(e.error) : e.cancelled && alert("Cancelled");
                 });
             } else Titanium.Facebook.requestWithGraphPath("/" + Titanium.Facebook.getUid(), {}, "GET", function(user) {
-                Util.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+                Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
                     $.storyWindow.rightNavButton = favoritedButton;
                 });
             });

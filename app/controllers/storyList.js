@@ -80,7 +80,7 @@ exports.openMainWindow = function() {
 function setRowData(data) {
 	var dataSet = [];
 	for (var i = 0; i < data.length; i++) {
-		var row = Alloy.createController('storyListRow', data[i]).getView();
+		var row = Alloy.createController('storyListRow', {data: data[i], window: $.storyListWindow}).getView();
 		dataSet.push(row);
 	}
 	return dataSet;

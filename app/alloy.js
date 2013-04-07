@@ -9,17 +9,91 @@
 // object. For example:
 //
 // Alloy.Globals.someGlobalFunction = function(){};
-
 Alloy.Globals.SERVER = 'http://truyen.zapto.org';
 Alloy.Globals.MAX_DISPLAY_ROW = 30;
+Alloy.Globals.NEW_TIME_MILLISECONDS = 259200000;
 Alloy.Globals.RATIO = 1;
 Alloy.Globals.CURRENT_TAB = null;
+Alloy.Globals.currentLoadingView = null;
+Alloy.Globals.FBPOST_LINK = 'https://www.facebook.com/bui.p.quan?ref=tn_tnmn';
+
 Titanium.Facebook.appid = "514307815249030";
 Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
+
+var loadingIcon = Titanium.UI.createActivityIndicator({
+	style:Ti.UI.iPhone.ActivityIndicatorStyle.BIG,
+});
+var loadingView = Titanium.UI.createView({
+	backgroundColor: 'rgba(0,0,0,0.5)',
+	backgroundImage: 'NONE',
+	width: Titanium.UI.FILL,
+	height: Titanium.UI.FILL,
+	id: "loadingView",
+	top: 0,
+	zIndex: 9999
+});
+loadingView.add(loadingIcon);
 
 function log(para) {
 	Ti.API.debug(JSON.stringify(para));
 };
+
+function showRequestResult(e) {
+	var s = '';
+	if (e.success) {
+		s = "SUCCESS";
+		if (e.result) {
+			s += "; " + e.result;
+		}
+		if (e.data) {
+			s += "; " + e.data;
+		}
+		if (!e.result && !e.data) {
+			s = '"success", but no data from FB.  I am guessing you cancelled the dialog.';
+		}
+	} else if (e.cancelled) {
+		s = "CANCELLED";
+	} else {
+		s = "FAIL";
+		if (e.error) {
+			s += "; " + e.error;
+		}
+	}
+	alert(s);
+}
+
+Alloy.Globals.fbPost = function(itemTitle, imageLink) {
+	var data = {
+		link: Alloy.Globals.FBPOST_LINK,
+		name: "TruyệnAlloy",
+		message: "Đang đọc truyện " + itemTitle + " trên điện thoại bằng ",
+		caption: "Phần mềm đọc truyện hay nhất trên mobile và tablet",
+		picture: imageLink,
+		description: "Hãy tải phần mềm để có thể đọc truyện mọi lúc mọi nơi, update liên tục, thông báo mỗi khi có chapter mới và rất nhiều tính năng khác. FREEEEEEE!!!!!",
+		test: [ {foo:'Encoding test', bar:'Durp durp'}, 'test' ]
+	};
+	Titanium.Facebook.dialog("feed", data, showRequestResult);
+}
+
+Alloy.Globals.openLoading = function(window) {
+	loadingIcon.show();
+	Alloy.Globals.currentLoadingView = loadingView;
+	window.add(loadingView);
+};
+
+Alloy.Globals.closeLoading = function(window) {
+	window.remove(Alloy.Globals.currentLoadingView);
+	Alloy.Globals.currentLoadingView = null;
+}
+
+Alloy.Globals.isNew = function(checkDate) {
+	var today = new Date();
+	if (today.getTime() - checkDate.getTime() <= Alloy.Globals.NEW_TIME_MILLISECONDS) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 Alloy.Globals.isTablet = function() {
 	var osname = Ti.Platform.osname,
@@ -170,7 +244,7 @@ Alloy.Globals.dynamicLoad = function(tableView, data) {
 	});
 };
 
-Alloy.Globals.addFavorite = function(itemId, itemType, user, callback) {
+Alloy.Globals.addFavorite = function(itemId, itemType, user, title, imageLink, callback) {
 	Alloy.Globals.getAjax('/addFavorite', {
 		userId: user.id,
 		username: user.username,
@@ -180,7 +254,7 @@ Alloy.Globals.addFavorite = function(itemId, itemType, user, callback) {
 	},
 	function(response) {
 		var data = JSON.parse(response).data;
-		console.log(data);
+		Alloy.Globals.fbPost(title, imageLink);
 		if (data == 'success') {
 			callback();
 		}
@@ -203,10 +277,14 @@ Alloy.Globals.removeUTF8 = function(str) {
 };
 
 Alloy.Globals.adv = function(type, callback) {
-	var advImage = Ti.UI.createImageView({
-		width: '100%',
-		height: 40,
-		image: Alloy.Globals.SERVER + '/images/adv/adv1.jpg',
+	// var advImage = Ti.UI.createImageView({
+		// width: '100%',
+		// height: 40,
+		// image: Alloy.Globals.SERVER + '/images/adv/adv1.jpg',
+	// });
+	var advImage = Ti.UI.iOS.createAdView({
+	 width: 'auto',
+	 height: 50
 	});
 	Alloy.Globals.getAjax('/adv', {
 		'type': type

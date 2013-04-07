@@ -10,7 +10,6 @@ function Controller() {
         }
     }
     function changeChapter(e) {
-        log(e.source.chapterId);
         Alloy.Globals.getAjax("/mangaReading", {
             id: args.mangaId,
             chapter: e.source.chapterId
@@ -290,13 +289,13 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: "100%",
-            height: 40,
+            height: 50,
             bottom: 0
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 80,
+            height: 100,
             bottom: 0
         });
         _.extend(o, {
@@ -322,7 +321,6 @@ function Controller() {
         Alloy.Globals.adv(3, function(advImage) {
             $.advView2.add(advImage);
         });
-        log(args);
         SetChangeChapterButtons(args.next, args.prev);
         hideFuncBar();
         addImageView();

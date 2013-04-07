@@ -8,7 +8,7 @@ function setRowData(data, type) {
 	var dataSet = [];
 	for (var i = 0; i < data.length; i++) {
 		data[i].bookType = type;
-		var row = Alloy.createController('favoriteRow', data[i]).getView();
+		var row = Alloy.createController('favoriteRow', {data: data[i], window: $.favoriteWindow}).getView();
 		dataSet.push(row);
 	}
 	return dataSet;
