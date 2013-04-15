@@ -1,20 +1,23 @@
 function Controller() {
     function selectItem(item) {
-        item.addEventListener("click", function(e) {
+        item.addEventListener("click", function() {
             Alloy.Globals.openLoading(args.window);
             Alloy.Globals.getAjax("/manga", {
                 id: item.dataId,
                 userId: Titanium.Facebook.getUid()
             }, function(response) {
-                var json = JSON.parse(response), mangaController = Alloy.createController("manga", json.data);
+                var json = JSON.parse(response);
+                var mangaController = Alloy.createController("manga", json.data);
                 Alloy.Globals.closeLoading(args.window);
                 mangaController.openMainWindow();
             });
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.row = Ti.UI.createTableViewRow(function() {
         var o = {};
         _.extend(o, {});
@@ -38,7 +41,7 @@ function Controller() {
         });
         return o;
     }());
-    $.addTopLevelView($.__views.row);
+    $.__views.row && $.addTopLevelView($.__views.row);
     $.__views.bookInfoView1 = Ti.UI.createView(function() {
         var o = {};
         _.extend(o, {});
@@ -80,7 +83,7 @@ function Controller() {
                 fontFamily: "Chalkboard SE"
             },
             textAlign: "center",
-            horizontalWrap: !0
+            horizontalWrap: true
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
@@ -91,7 +94,7 @@ function Controller() {
                 fontFamily: "Chalkboard SE"
             },
             textAlign: "center",
-            horizontalWrap: !0
+            horizontalWrap: true
         });
         _.extend(o, {
             id: "bookName1"
@@ -171,7 +174,7 @@ function Controller() {
                 fontFamily: "Chalkboard SE"
             },
             textAlign: "center",
-            horizontalWrap: !0
+            horizontalWrap: true
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
@@ -182,7 +185,7 @@ function Controller() {
                 fontFamily: "Chalkboard SE"
             },
             textAlign: "center",
-            horizontalWrap: !0
+            horizontalWrap: true
         });
         _.extend(o, {
             id: "bookName2"
@@ -262,7 +265,7 @@ function Controller() {
                 fontFamily: "Chalkboard SE"
             },
             textAlign: "center",
-            horizontalWrap: !0
+            horizontalWrap: true
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
@@ -273,7 +276,7 @@ function Controller() {
                 fontFamily: "Chalkboard SE"
             },
             textAlign: "center",
-            horizontalWrap: !0
+            horizontalWrap: true
         });
         _.extend(o, {
             id: "bookName3"
@@ -315,18 +318,18 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; 3 > i; i++) {
         var bookInfoView = $["bookInfoView" + (i + 1)];
         if (args.data[i]) {
             $["bookName" + (i + 1)].text = args.data[i].title;
             $["coverLink" + (i + 1)].image = Alloy.Globals.SERVER + args.data[i].folder + "/cover.jpg";
             bookInfoView.dataId = args.data[i]._id;
             selectItem(bookInfoView);
-        } else bookInfoView.setVisible(!1);
+        } else bookInfoView.setVisible(false);
     }
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

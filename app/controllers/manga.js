@@ -30,9 +30,9 @@ exports.openMainWindow = function() {
 		backgroundImage: '/common/favorites_color.png',
 	});
 	favoriteButton.addEventListener('click', function() {
-		if (Titanium.Facebook.loggedIn == 0) {
-			Ti.Facebook.authorize();
-			Titanium.Facebook.addEventListener('login', function(e) {
+		if (Alloy.Globals.facebook.loggedIn == 0) {
+			Alloy.Globals.facebook.authorize();
+			Alloy.Globals.facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
 					Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, args.title, Alloy.Globals.SERVER + args.folder + '/cover.jpg', function() {
@@ -45,9 +45,9 @@ exports.openMainWindow = function() {
 		    }
 			});
 		} else {
-			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
+			Alloy.Globals.facebook.requestWithGraphPath('/' + Alloy.Globals.facebook.getUid(), {}, 'GET', function(user) {
 				log(user);
-				Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+				Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), args.title, Alloy.Globals.SERVER + args.folder + '/cover.jpg', function() {
 					$.mangaWindow.rightNavButton = favoritedButton;
 				});
 			});
@@ -179,7 +179,8 @@ function dynamicLoad(tableView, data) {
 		}
 		for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
 			data[i].mangaId = args._id;
-			var row = Alloy.createController('mangaRow', {data: data[i]}).getView();
+			// var row = Alloy.createController('mangaRow', {data: data[i]}).getView();
+			var row = Alloy.createController('mangaRow', {data: data[i], window: $.mangaWindow}).getView();
 			// selectItem(row);
 			tableView.appendRow(row, { animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE });
 		}

@@ -2,18 +2,18 @@
   backgroundColor: 'transparent',
   separatorColor: 'transparent',
   style: Ti.UI.iPhone.TableViewStyle.PLAIN,
-  separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+  separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE
 },
 ".homeRow[platform=ios formFactor=handheld]": {
 	height: 120,
 	backgroundColor: 'transparent',
-	backgroundImage: '/common/bookshelfBackground.png',
+	backgroundImage: '/common/bookshelfBackground.png'
 	// selectedBackgroundColor: 'orange',
 },
 ".homeRow[platform=ios formFactor=tablet]": {
 	height: 240,
 	backgroundColor: 'transparent',
-	backgroundImage: '/common/bookshelfBackground.png',
+	backgroundImage: '/common/bookshelfBackground.png'
 	// selectedBackgroundColor: 'orange',
 },
 ".homeRowBackground": {
@@ -33,11 +33,11 @@
 },
 ".homeBackgroundPanel[platform=ios formFactor=handheld]": {
 	width: 181,
-	height: 45,
+	height: 55,
 },
 ".homeBackgroundPanel[platform=ios formFactor=tablet]": {
 	width: 362,
-	height: 90,
+	height: 110,
 },
 "#advertise[platform=ios formFactor=handheld]": {
 	width: '100%',

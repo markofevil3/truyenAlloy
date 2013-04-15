@@ -1,26 +1,29 @@
 function Controller() {
     function sendSupport() {
         if (textArea.value.length > 20) {
-            sendButton.enabled = !1;
+            sendButton.enabled = false;
             Alloy.Globals.getAjax("/support", {
                 content: textArea.value
-            }, function(response) {
+            }, function() {
                 alert("Yêu cầu của bạn đã được gửi đi!");
-                sendButton.enabled = !0;
+                sendButton.enabled = true;
                 textArea.value = "";
             });
         } else alert("Nội dung quá ngắn!");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
+    var __defers = {};
     $.__views.supportWindow = Ti.UI.createWindow({
         backgroundImage: "/common/setting_bg.png",
         barImage: "/common/top.png",
         id: "supportWindow",
         title: "Yêu Cầu Truyện"
     });
-    $.addTopLevelView($.__views.supportWindow);
+    $.__views.supportWindow && $.addTopLevelView($.__views.supportWindow);
     $.__views.wrapperView = Ti.UI.createScrollView({
         width: "100%",
         height: "100%",
@@ -56,7 +59,7 @@ function Controller() {
         width: "95%",
         height: 170,
         top: 10,
-        suppressReturn: !1,
+        suppressReturn: false,
         id: "contentTextArea"
     });
     $.__views.wrapperView.add($.__views.contentTextArea);
@@ -72,13 +75,14 @@ function Controller() {
         id: "sendButton"
     });
     $.__views.wrapperView.add($.__views.sendButton);
-    sendSupport ? $.__views.sendButton.addEventListener("click", sendSupport) : __defers["$.__views.sendButton!click!sendSupport"] = !0;
+    sendSupport ? $.__views.sendButton.addEventListener("click", sendSupport) : __defers["$.__views.sendButton!click!sendSupport"] = true;
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var textArea = $.contentTextArea, sendButton = $.sendButton;
+    var textArea = $.contentTextArea;
+    var sendButton = $.sendButton;
     exports.openMainWindow = function() {
         $.supportWindow.leftNavButton = Alloy.Globals.backButton($.supportWindow);
-        $.wrapperView.addEventListener("singletap", function(e) {
+        $.wrapperView.addEventListener("singletap", function() {
             textArea.blur();
         });
         Alloy.Globals.CURRENT_TAB.open($.supportWindow);
@@ -87,6 +91,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

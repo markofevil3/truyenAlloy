@@ -42,14 +42,14 @@ function getFavorites() {
 };
 
 //## CHECK LOGIN TO GET FAVORITE LIST
-var facebookButton = Titanium.Facebook.createLoginButton({
-	style: Ti.Facebook.BUTTON_STYLE_NORMAL,
-});
+// var facebookButton = Alloy.Globals.facebook.createLoginButton({
+	// style: Ti.Facebook.BUTTON_STYLE_NORMAL,
+// });
 $.favoriteWindow.addEventListener('focus', function(f) {
 	Alloy.Globals.CURRENT_TAB = $.favoriteTab;
-	if (Titanium.Facebook.loggedIn == 0) {
-		Ti.Facebook.authorize();
-		Titanium.Facebook.addEventListener('login', function(e) {
+	if (Alloy.Globals.facebook.loggedIn == 0) {
+		Alloy.Globals.facebook.authorize();
+		Alloy.Globals.facebook.addEventListener('login', function(e) {
 	    if (e.success) {
 				getFavorites();
 	    } else if (e.error) {

@@ -1,11 +1,11 @@
 function Controller() {
     function SetChangeChapterButtons(next, prev) {
-        if (next != null) {
-            $.nextButton.visible = !0;
+        if (null != next) {
+            $.nextButton.visible = true;
             $.nextButton.chapterId = next;
         }
-        if (prev != null) {
-            $.prevButton.visible = !0;
+        if (null != prev) {
+            $.prevButton.visible = true;
             $.prevButton.chapterId = prev;
         }
     }
@@ -30,14 +30,14 @@ function Controller() {
     function showFuncBar() {
         if ($.funcBar.visible) $.funcBar.animate({
             opacity: 0,
-            duration: 1000
+            duration: 1e3
         }, function() {
             $.funcBar.hide();
         }); else {
             $.funcBar.show();
             $.funcBar.animate({
                 opacity: 1,
-                duration: 1000
+                duration: 1e3
             }, function() {});
         }
     }
@@ -54,17 +54,18 @@ function Controller() {
     }
     function addImageView() {
         var maxZindex = listImages.length;
-        for (var i = 0; i < listImages.length; i++) {
+        for (var i = 0; listImages.length > i; i++) {
             var image = Ti.UI.createImageView({
                 image: Alloy.Globals.SERVER + listImages[i],
                 width: "100%",
                 height: "auto"
-            }), scrollView = Ti.UI.createScrollView({
+            });
+            var scrollView = Ti.UI.createScrollView({
                 contentWidth: "100%",
                 contentHeight: "100%",
                 backgroundColor: "#000",
-                showVerticalScrollIndicator: !0,
-                showHorizontalScrollIndicator: !0,
+                showVerticalScrollIndicator: true,
+                showHorizontalScrollIndicator: true,
                 height: "100%",
                 width: "100%",
                 zIndex: maxZindex,
@@ -80,7 +81,7 @@ function Controller() {
     }
     function changePage() {
         $.mangaReadingWindow.addEventListener("swipe", function(e) {
-            if (e.direction == "left") {
+            if ("left" == e.direction) {
                 var nextImage = images[currentPage.index + 1];
                 nextImage && $.imageHolderView.animate({
                     view: nextImage,
@@ -92,7 +93,7 @@ function Controller() {
                     pageCount.text = currentPage.index + 1 + "/" + listImages.length;
                 });
             }
-            if (e.direction == "right") {
+            if ("right" == e.direction) {
                 var nextImage = images[currentPage.index - 1];
                 if (nextImage) {
                     $.imageHolderView.animate({
@@ -108,13 +109,16 @@ function Controller() {
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
+    var __defers = {};
     $.__views.mangaReadingWindow = Ti.UI.createWindow({
         backgroundColor: "#000",
         id: "mangaReadingWindow"
     });
-    $.addTopLevelView($.__views.mangaReadingWindow);
+    $.__views.mangaReadingWindow && $.addTopLevelView($.__views.mangaReadingWindow);
     $.__views.funcBar = Ti.UI.createView({
         width: "100%",
         height: "100%",
@@ -187,7 +191,7 @@ function Controller() {
         return o;
     }());
     $.__views.topBar.add($.__views.closeButton);
-    closeWindow ? $.__views.closeButton.addEventListener("click", closeWindow) : __defers["$.__views.closeButton!click!closeWindow"] = !0;
+    closeWindow ? $.__views.closeButton.addEventListener("click", closeWindow) : __defers["$.__views.closeButton!click!closeWindow"] = true;
     $.__views.chapterTitle = Ti.UI.createLabel(function() {
         var o = {};
         _.extend(o, {});
@@ -257,12 +261,12 @@ function Controller() {
         selectedColor: "#333",
         color: "#CCCCCC",
         left: 10,
-        visible: !1,
+        visible: false,
         id: "prevButton",
         title: "Chapter Trước"
     });
     $.__views.buttonBar.add($.__views.prevButton);
-    changeChapter ? $.__views.prevButton.addEventListener("click", changeChapter) : __defers["$.__views.prevButton!click!changeChapter"] = !0;
+    changeChapter ? $.__views.prevButton.addEventListener("click", changeChapter) : __defers["$.__views.prevButton!click!changeChapter"] = true;
     $.__views.nextButton = Ti.UI.createButton({
         width: 120,
         height: 30,
@@ -278,12 +282,12 @@ function Controller() {
         selectedColor: "#333",
         color: "#CCCCCC",
         right: 10,
-        visible: !1,
+        visible: false,
         id: "nextButton",
         title: "Chapter Sau"
     });
     $.__views.buttonBar.add($.__views.nextButton);
-    changeChapter ? $.__views.nextButton.addEventListener("click", changeChapter) : __defers["$.__views.nextButton!click!changeChapter"] = !0;
+    changeChapter ? $.__views.nextButton.addEventListener("click", changeChapter) : __defers["$.__views.nextButton!click!changeChapter"] = true;
     $.__views.advView2 = Ti.UI.createView(function() {
         var o = {};
         _.extend(o, {});
@@ -312,7 +316,11 @@ function Controller() {
     $.__views.mangaReadingWindow.add($.__views.imageHolderView);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var args = arguments[0] || {}, images = [], listImages, pageCount = $.pageCount, currentPage;
+    var args = arguments[0] || {};
+    var images = [];
+    var listImages;
+    var pageCount = $.pageCount;
+    var currentPage;
     exports.openMainWindow = function() {
         listImages = args.pages;
         $.mangaReadingWindow.title = "Chapter " + args.chapter;
@@ -337,6 +345,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

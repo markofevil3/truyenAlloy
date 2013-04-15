@@ -8,20 +8,23 @@ function Controller() {
         });
     }
     function changeTextSize(e) {
-        e.source.dataType == "0" ? $.contentLabel.font = {
+        $.contentLabel.font = "0" == e.source.dataType ? {
             fontSize: 18
-        } : $.contentLabel.font = {
+        } : {
             fontSize: 22
         };
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
+    var __defers = {};
     $.__views.storyReadingWindow = Ti.UI.createWindow({
         backgroundColor: "#f3f3f3",
         id: "storyReadingWindow"
     });
-    $.addTopLevelView($.__views.storyReadingWindow);
+    $.__views.storyReadingWindow && $.addTopLevelView($.__views.storyReadingWindow);
     $.__views.topBar = Ti.UI.createView({
         width: "100%",
         height: 40,
@@ -48,7 +51,7 @@ function Controller() {
         dataType: "0"
     });
     $.__views.topBar.add($.__views.textSmallButton);
-    changeTextSize ? $.__views.textSmallButton.addEventListener("click", changeTextSize) : __defers["$.__views.textSmallButton!click!changeTextSize"] = !0;
+    changeTextSize ? $.__views.textSmallButton.addEventListener("click", changeTextSize) : __defers["$.__views.textSmallButton!click!changeTextSize"] = true;
     $.__views.textBigButton = Ti.UI.createButton({
         width: 30,
         height: 30,
@@ -67,7 +70,7 @@ function Controller() {
         dataType: "1"
     });
     $.__views.topBar.add($.__views.textBigButton);
-    changeTextSize ? $.__views.textBigButton.addEventListener("click", changeTextSize) : __defers["$.__views.textBigButton!click!changeTextSize"] = !0;
+    changeTextSize ? $.__views.textBigButton.addEventListener("click", changeTextSize) : __defers["$.__views.textBigButton!click!changeTextSize"] = true;
     $.__views.closeButton = Ti.UI.createButton({
         title: "close",
         width: 60,
@@ -87,10 +90,10 @@ function Controller() {
         id: "closeButton"
     });
     $.__views.topBar.add($.__views.closeButton);
-    closeWindow ? $.__views.closeButton.addEventListener("click", closeWindow) : __defers["$.__views.closeButton!click!closeWindow"] = !0;
+    closeWindow ? $.__views.closeButton.addEventListener("click", closeWindow) : __defers["$.__views.closeButton!click!closeWindow"] = true;
     $.__views.contentView = Ti.UI.createScrollView({
         contentHeight: "auto",
-        showVerticalScrollIndicator: !0,
+        showVerticalScrollIndicator: true,
         width: "100%",
         backgroundColor: "#fff",
         top: 40,
@@ -121,6 +124,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

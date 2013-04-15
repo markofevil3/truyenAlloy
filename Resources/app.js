@@ -8,7 +8,7 @@ function showRequestResult(e) {
         s = "SUCCESS";
         e.result && (s += "; " + e.result);
         e.data && (s += "; " + e.data);
-        !e.result && !e.data && (s = "\"success\", but no data from FB.  I am guessing you cancelled the dialog.");
+        e.result || e.data || (s = '"success", but no data from FB.  I am guessing you cancelled the dialog.');
     } else if (e.cancelled) s = "CANCELLED"; else {
         s = "FAIL";
         e.error && (s += "; " + e.error);
@@ -26,7 +26,7 @@ Alloy.Globals.SERVER = "http://truyen.zapto.org";
 
 Alloy.Globals.MAX_DISPLAY_ROW = 30;
 
-Alloy.Globals.NEW_TIME_MILLISECONDS = 259200000;
+Alloy.Globals.NEW_TIME_MILLISECONDS = 2592e5;
 
 Alloy.Globals.RATIO = 1;
 
@@ -36,13 +36,19 @@ Alloy.Globals.currentLoadingView = null;
 
 Alloy.Globals.FBPOST_LINK = "https://www.facebook.com/bui.p.quan?ref=tn_tnmn";
 
-Titanium.Facebook.appid = "514307815249030";
+Alloy.Globals.facebook = require("facebook");
 
-Titanium.Facebook.permissions = [ "publish_stream", "read_stream" ];
+Alloy.Globals.facebook.appid = "514307815249030";
+
+Alloy.Globals.facebook.permissions = [ "publish_stream", "read_stream" ];
+
+Alloy.Globals.facebook.forceDialogAuth = true;
 
 var loadingIcon = Titanium.UI.createActivityIndicator({
     style: Ti.UI.iPhone.ActivityIndicatorStyle.BIG
-}), loadingView = Titanium.UI.createView({
+});
+
+var loadingView = Titanium.UI.createView({
     backgroundColor: "rgba(0,0,0,0.5)",
     backgroundImage: "NONE",
     width: Titanium.UI.FILL,
@@ -67,10 +73,11 @@ Alloy.Globals.fbPost = function(itemTitle, imageLink) {
             bar: "Durp durp"
         }, "test" ]
     };
-    Titanium.Facebook.dialog("feed", data, showRequestResult);
+    Alloy.Globals.facebook.dialog("feed", data, showRequestResult);
 };
 
 Alloy.Globals.openLoading = function(window) {
+    log(window);
     loadingIcon.show();
     Alloy.Globals.currentLoadingView = loadingView;
     window.add(loadingView);
@@ -82,17 +89,18 @@ Alloy.Globals.closeLoading = function(window) {
 };
 
 Alloy.Globals.isNew = function(checkDate) {
-    var today = new Date;
-    return today.getTime() - checkDate.getTime() <= Alloy.Globals.NEW_TIME_MILLISECONDS ? !0 : !1;
+    var today = new Date();
+    return today.getTime() - checkDate.getTime() <= Alloy.Globals.NEW_TIME_MILLISECONDS ? true : false;
 };
 
 Alloy.Globals.isTablet = function() {
-    var osname = Ti.Platform.osname, version = Ti.Platform.version, height = Ti.Platform.displayCaps.platformHeight, width = Ti.Platform.displayCaps.platformWidth, isTablet = osname === "ipad" || osname === "android" && (width > 899 || height > 899);
+    var osname = Ti.Platform.osname, height = (Ti.Platform.version, Ti.Platform.displayCaps.platformHeight), width = Ti.Platform.displayCaps.platformWidth;
+    var isTablet = "ipad" === osname || "android" === osname && (width > 899 || height > 899);
     return isTablet;
 };
 
 Alloy.Globals.getDeviceType = function() {
-    var isTablet = Alloy.Globals.isTablet(), device;
+    var isTablet = Alloy.Globals.isTablet();
     return isTablet ? 1 : 0;
 };
 
@@ -104,7 +112,7 @@ Alloy.Globals.backButton = function(window) {
     });
     backbutton.addEventListener("click", function() {
         window.close({
-            animated: !0
+            animated: true
         });
     });
     return backbutton;
@@ -112,20 +120,21 @@ Alloy.Globals.backButton = function(window) {
 
 Alloy.Globals.getAjax = function(url, query, callback) {
     var xhr = Ti.Network.createHTTPClient({
-        onload: function(e) {
+        onload: function() {
             Ti.API.debug(this.responseText);
             callback && callback(this.responseText);
         },
         onerror: function(e) {
             Ti.API.debug(e.error);
         },
-        timeout: 10000
-    }), fullUrl = Alloy.Globals.SERVER + url;
+        timeout: 1e4
+    });
+    var fullUrl = Alloy.Globals.SERVER + url;
     if (query) if (isHash(query)) {
-        var isFirstParameter = !0;
+        var isFirstParameter = true;
         for (var key in query) {
             fullUrl += isFirstParameter ? "?" : "&";
-            isFirstParameter = !1;
+            isFirstParameter = false;
             fullUrl += encodeURIComponent(key) + "=" + encodeURIComponent(query[key]);
         }
     } else query.length > 0 && (fullUrl += "?" + query);
@@ -142,26 +151,27 @@ Alloy.Globals.dynamicSort = function(property, type) {
 
 Alloy.Globals.dynamicLoad = function(tableView, data) {
     function beginUpdate() {
-        updating = !0;
+        updating = true;
         tableView.appendRow(loadingRow);
         loadingIcon.show();
         setTimeout(endUpdate, 500);
     }
     function endUpdate() {
-        updating = !1;
+        updating = false;
         loadingIcon.hide();
         tableView.deleteRow(lastRowIndex - 1, {
             animationStyle: Titanium.UI.iPhone.RowAnimationStyle.NONE
         });
         var nextRowIndex = lastRowIndex - 1 + Alloy.Globals.MAX_DISPLAY_ROW;
         nextRowIndex > data.length && (nextRowIndex = data.length);
-        for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
+        for (var i = lastRowIndex - 1; nextRowIndex > i; i++) {
             var row = Ti.UI.createTableViewRow({
                 backgroundImage: "/common/bookshelfBackground.png",
                 height: 40,
                 chapterId: data[i]._id,
                 id: tableView.id
-            }), labelChapter = Ti.UI.createLabel({
+            });
+            var labelChapter = Ti.UI.createLabel({
                 text: "Chapter " + data[i].chapter,
                 color: "#fff",
                 textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
@@ -170,7 +180,8 @@ Alloy.Globals.dynamicLoad = function(tableView, data) {
                     fontSize: 17,
                     fontFamily: "Chalkboard SE"
                 }
-            }), labelTitle = Ti.UI.createLabel({
+            });
+            var labelTitle = Ti.UI.createLabel({
                 text: data[i].title,
                 left: 105 * Alloy.Globals.RATIO
             });
@@ -183,25 +194,32 @@ Alloy.Globals.dynamicLoad = function(tableView, data) {
         }
         lastRowIndex += Alloy.Globals.MAX_DISPLAY_ROW;
         tableView.scrollToIndex(lastRowIndex - Alloy.Globals.MAX_DISPLAY_ROW, {
-            animated: !0,
+            animated: true,
             position: Ti.UI.iPhone.TableViewScrollPosition.BOTTOM
         });
     }
     var loadingIcon = Titanium.UI.createActivityIndicator({
         style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
-    }), loadingView = Titanium.UI.createView();
+    });
+    var loadingView = Titanium.UI.createView();
     loadingView.add(loadingIcon);
     var loadingRow = Ti.UI.createTableViewRow({
         height: 40
     });
     loadingRow.add(loadingView);
-    var lastRowIndex = tableView.data[0].rowCount, updating = !1, lastDistance = 0;
+    var lastRowIndex = tableView.data[0].rowCount;
+    var updating = false;
+    var lastDistance = 0;
     tableView.addEventListener("scroll", function(e) {
         lastRowIndex = tableView.data[0].rowCount;
-        var offset = e.contentOffset.y, height = e.size.height, total = offset + height, theEnd = e.contentSize.height, distance = theEnd - total;
-        if (distance < lastDistance) {
-            var nearEnd = theEnd * 1;
-            !updating && total >= nearEnd && lastRowIndex < data.length && tableView.data[0].rows[0].chapterId == data[0]._id && tableView.data[0].rows[1] && tableView.data[0].rows[1].chapterId == data[1]._id && tableView.data[0].rows[lastRowIndex - 1].chapterId != data[data.length - 1]._id && lastRowIndex >= Alloy.Globals.MAX_DISPLAY_ROW && beginUpdate();
+        var offset = e.contentOffset.y;
+        var height = e.size.height;
+        var total = offset + height;
+        var theEnd = e.contentSize.height;
+        var distance = theEnd - total;
+        if (lastDistance > distance) {
+            var nearEnd = 1 * theEnd;
+            !updating && total >= nearEnd && data.length > lastRowIndex && tableView.data[0].rows[0].chapterId == data[0]._id && tableView.data[0].rows[1] && tableView.data[0].rows[1].chapterId == data[1]._id && tableView.data[0].rows[lastRowIndex - 1].chapterId != data[data.length - 1]._id && lastRowIndex >= Alloy.Globals.MAX_DISPLAY_ROW && beginUpdate();
         }
         lastDistance = distance;
     });
@@ -217,7 +235,7 @@ Alloy.Globals.addFavorite = function(itemId, itemType, user, title, imageLink, c
     }, function(response) {
         var data = JSON.parse(response).data;
         Alloy.Globals.fbPost(title, imageLink);
-        data == "success" && callback();
+        "success" == data && callback();
     });
 };
 
@@ -241,15 +259,7 @@ Alloy.Globals.adv = function(type, callback) {
         width: "auto",
         height: 50
     });
-    Alloy.Globals.getAjax("/adv", {
-        type: type
-    }, function(response) {
-        var link = JSON.parse(response).data;
-        advImage.addEventListener("click", function(e) {
-            Titanium.Platform.openURL(link);
-        });
-        callback(advImage);
-    });
+    callback(advImage);
 };
 
 Alloy.createController("index");

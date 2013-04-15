@@ -4,10 +4,13 @@ function Controller() {
         selectedMenuController.openMainWindow();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
+    var __defers = {};
     $.__views.homeWindow = Ti.UI.createWindow({
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         barImage: "/common/top.png",
         id: "homeWindow",
         title: "Home"
@@ -58,7 +61,7 @@ function Controller() {
         return o;
     }());
     __alloyId0.push($.__views.MangaList);
-    selectMenu ? $.__views.MangaList.addEventListener("click", selectMenu) : __defers["$.__views.MangaList!click!selectMenu"] = !0;
+    selectMenu ? $.__views.MangaList.addEventListener("click", selectMenu) : __defers["$.__views.MangaList!click!selectMenu"] = true;
     $.__views.__alloyId1 = Ti.UI.createView({
         width: "100%",
         height: "100%",
@@ -100,15 +103,15 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: 181,
-            height: 45
+            height: 55
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: 362,
-            height: 90
+            height: 110
         });
         _.extend(o, {
-            image: "/common/bg_paper_tournament.png",
+            image: "/common/bg_blue.png",
             id: "__alloyId3"
         });
         return o;
@@ -135,7 +138,7 @@ function Controller() {
         return o;
     }());
     __alloyId0.push($.__views.StoryList);
-    selectMenu ? $.__views.StoryList.addEventListener("click", selectMenu) : __defers["$.__views.StoryList!click!selectMenu"] = !0;
+    selectMenu ? $.__views.StoryList.addEventListener("click", selectMenu) : __defers["$.__views.StoryList!click!selectMenu"] = true;
     $.__views.__alloyId4 = Ti.UI.createLabel(function() {
         var o = {};
         _.extend(o, {});
@@ -170,15 +173,15 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: 181,
-            height: 45
+            height: 55
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: 362,
-            height: 90
+            height: 110
         });
         _.extend(o, {
-            image: "/common/bg_paper_tournament.png",
+            image: "/common/bg_pink.png",
             id: "__alloyId5"
         });
         return o;
@@ -205,7 +208,7 @@ function Controller() {
         return o;
     }());
     __alloyId0.push($.__views.FunnyList);
-    selectMenu ? $.__views.FunnyList.addEventListener("click", selectMenu) : __defers["$.__views.FunnyList!click!selectMenu"] = !0;
+    selectMenu ? $.__views.FunnyList.addEventListener("click", selectMenu) : __defers["$.__views.FunnyList!click!selectMenu"] = true;
     $.__views.__alloyId6 = Ti.UI.createLabel(function() {
         var o = {};
         _.extend(o, {});
@@ -240,15 +243,15 @@ function Controller() {
         _.extend(o, {});
         Alloy.isHandheld && _.extend(o, {
             width: 181,
-            height: 45
+            height: 55
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: 362,
-            height: 90
+            height: 110
         });
         _.extend(o, {
-            image: "/common/bg_paper_tournament.png",
+            image: "/common/bg_green.png",
             id: "__alloyId7"
         });
         return o;
@@ -268,13 +271,13 @@ function Controller() {
         id: "homeTab",
         icon: "/common/home.png"
     });
-    $.addTopLevelView($.__views.homeTab);
+    $.__views.homeTab && $.addTopLevelView($.__views.homeTab);
     exports.destroy = function() {};
     _.extend($, $.__views);
     Alloy.Globals.adv(Alloy.Globals.getDeviceType(), function(advImage) {
         $.advertise.add(advImage);
     });
-    $.homeWindow.addEventListener("focus", function(e) {
+    $.homeWindow.addEventListener("focus", function() {
         Alloy.Globals.CURRENT_TAB = $.homeTab;
     });
     __defers["$.__views.MangaList!click!selectMenu"] && $.__views.MangaList.addEventListener("click", selectMenu);
@@ -283,6 +286,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

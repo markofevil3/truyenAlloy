@@ -1,7 +1,7 @@
 function Controller() {
     function setRowData(data, maxRow) {
         var dataSet = [];
-        for (var i = 0; i < maxRow; i++) if (data[i]) {
+        for (var i = 0; maxRow > i; i++) if (data[i]) {
             data[i].mangaId = args._id;
             var row = Alloy.createController("mangaRow", {
                 data: data[i],
@@ -12,35 +12,36 @@ function Controller() {
         return dataSet;
     }
     function getNextPrevChapter(data) {
-        for (var i = 0; i < data.length; i++) {
+        for (var i = 0; data.length > i; i++) {
             data[i - 1] && (data[i].next = data[i - 1]._id);
             data[i + 1] && (data[i].prev = data[i + 1]._id);
         }
     }
     function getNewestChapter(chapters) {
         var newest = 0;
-        for (var i = 0; i < chapters.length; i++) chapters[i].chapter > newest && (newest = chapters[i].chapter);
+        for (var i = 0; chapters.length > i; i++) chapters[i].chapter > newest && (newest = chapters[i].chapter);
         return newest;
     }
     function dynamicLoad(tableView, data) {
         function beginUpdate() {
-            updating = !0;
+            updating = true;
             tableView.appendRow(loadingRow);
             loadingIcon.show();
             setTimeout(endUpdate, 500);
         }
         function endUpdate() {
-            updating = !1;
+            updating = false;
             loadingIcon.hide();
             tableView.deleteRow(lastRowIndex - 1, {
                 animationStyle: Titanium.UI.iPhone.RowAnimationStyle.NONE
             });
             var nextRowIndex = lastRowIndex - 1 + MAX_DISPLAY_ROW;
             nextRowIndex > data.length && (nextRowIndex = data.length);
-            for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
+            for (var i = lastRowIndex - 1; nextRowIndex > i; i++) {
                 data[i].mangaId = args._id;
                 var row = Alloy.createController("mangaRow", {
-                    data: data[i]
+                    data: data[i],
+                    window: $.mangaWindow
                 }).getView();
                 tableView.appendRow(row, {
                     animationStyle: Titanium.UI.iPhone.RowAnimationStyle.NONE
@@ -48,38 +49,47 @@ function Controller() {
             }
             lastRowIndex += MAX_DISPLAY_ROW;
             tableView.scrollToIndex(lastRowIndex - MAX_DISPLAY_ROW, {
-                animated: !0,
+                animated: true,
                 position: Ti.UI.iPhone.TableViewScrollPosition.BOTTOM
             });
         }
         var loadingIcon = Titanium.UI.createActivityIndicator({
             style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
-        }), loadingView = Titanium.UI.createView();
+        });
+        var loadingView = Titanium.UI.createView();
         loadingView.add(loadingIcon);
         var loadingRow = Ti.UI.createTableViewRow({
             height: 40
         });
         loadingRow.add(loadingView);
-        var lastRowIndex = tableView.data[0].rowCount, updating = !1, lastDistance = 0;
+        var lastRowIndex = tableView.data[0].rowCount;
+        var updating = false;
+        var lastDistance = 0;
         tableView.addEventListener("scroll", function(e) {
             lastRowIndex = tableView.data[0].rowCount;
-            var offset = e.contentOffset.y, height = e.size.height, total = offset + height, theEnd = e.contentSize.height, distance = theEnd - total;
-            if (distance < lastDistance) {
-                var nearEnd = theEnd * 1;
-                !updating && total >= nearEnd && lastRowIndex < data.length && tableView.data[0].rows[0].chapterId == data[0]._id && tableView.data[0].rows[1] && tableView.data[0].rows[1].chapterId == data[1]._id && tableView.data[0].rows[lastRowIndex - 1].chapterId != data[data.length - 1]._id && lastRowIndex >= MAX_DISPLAY_ROW && beginUpdate();
+            var offset = e.contentOffset.y;
+            var height = e.size.height;
+            var total = offset + height;
+            var theEnd = e.contentSize.height;
+            var distance = theEnd - total;
+            if (lastDistance > distance) {
+                var nearEnd = 1 * theEnd;
+                !updating && total >= nearEnd && data.length > lastRowIndex && tableView.data[0].rows[0].chapterId == data[0]._id && tableView.data[0].rows[1] && tableView.data[0].rows[1].chapterId == data[1]._id && tableView.data[0].rows[lastRowIndex - 1].chapterId != data[data.length - 1]._id && lastRowIndex >= MAX_DISPLAY_ROW && beginUpdate();
             }
             lastDistance = distance;
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.mangaWindow = Ti.UI.createWindow({
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         barImage: "/common/top.png",
         id: "mangaWindow"
     });
-    $.addTopLevelView($.__views.mangaWindow);
+    $.__views.mangaWindow && $.addTopLevelView($.__views.mangaWindow);
     $.__views.wrapper = Ti.UI.createView({
         width: Titanium.UI.FILL,
         height: Titanium.UI.FILL,
@@ -284,7 +294,7 @@ function Controller() {
     $.__views.searchView.add($.__views.searchButton);
     $.__views.sortButton = Ti.UI.createButton({
         color: "#fff",
-        opacity: 0.7,
+        opacity: .7,
         height: 30,
         width: 30,
         right: "8%",
@@ -323,7 +333,10 @@ function Controller() {
     $.__views.wrapper.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var args = arguments[0] || {}, MAX_DISPLAY_ROW = 15, table = $.bookShellTable, search = $.searchButton;
+    var args = arguments[0] || {};
+    var MAX_DISPLAY_ROW = 15;
+    var table = $.bookShellTable;
+    var search = $.searchButton;
     exports.openMainWindow = function() {
         Alloy.Globals.CURRENT_TAB.open($.mangaWindow);
         $.mangaWindow.leftNavButton = Alloy.Globals.backButton($.mangaWindow);
@@ -338,7 +351,8 @@ function Controller() {
             itemId: args._id,
             backgroundColor: "transparent",
             backgroundImage: "/common/favorites_dark.png"
-        }), favoritedButton = Titanium.UI.createButton({
+        });
+        var favoritedButton = Titanium.UI.createButton({
             text: "favorite",
             color: "#fff",
             height: 40,
@@ -347,23 +361,23 @@ function Controller() {
             backgroundImage: "/common/favorites_color.png"
         });
         favoriteButton.addEventListener("click", function() {
-            if (Titanium.Facebook.loggedIn == 0) {
-                Ti.Facebook.authorize();
-                Titanium.Facebook.addEventListener("login", function(e) {
+            if (0 == Alloy.Globals.facebook.loggedIn) {
+                Alloy.Globals.facebook.authorize();
+                Alloy.Globals.facebook.addEventListener("login", function(e) {
                     e.success ? Alloy.Globals.addFavorite(favoriteButton.itemId, 0, e.data, args.title, Alloy.Globals.SERVER + args.folder + "/cover.jpg", function() {
                         $.mangaWindow.rightNavButton = favoritedButton;
                     }) : e.error ? alert(e.error) : e.cancelled && alert("Cancelled");
                 });
-            } else Titanium.Facebook.requestWithGraphPath("/" + Titanium.Facebook.getUid(), {}, "GET", function(user) {
+            } else Alloy.Globals.facebook.requestWithGraphPath("/" + Alloy.Globals.facebook.getUid(), {}, "GET", function(user) {
                 log(user);
-                Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+                Alloy.Globals.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), args.title, Alloy.Globals.SERVER + args.folder + "/cover.jpg", function() {
                     $.mangaWindow.rightNavButton = favoritedButton;
                 });
             });
         });
         var listChapters = args.chapters;
         getNextPrevChapter(listChapters);
-        args.favorite ? $.mangaWindow.rightNavButton = favoritedButton : $.mangaWindow.rightNavButton = favoriteButton;
+        $.mangaWindow.rightNavButton = args.favorite ? favoritedButton : favoriteButton;
         $.mangaWindow.title = args.title;
         $.bookCover.image = Alloy.Globals.SERVER + args.folder + "/cover.jpg";
         $.bookTitle.text = args.title;
@@ -374,46 +388,49 @@ function Controller() {
         table.data = tbl_data;
         dynamicLoad(table, listChapters);
         search.addEventListener("change", function(e) {
-            var results = [], regexValue = new RegExp(Alloy.Globals.removeUTF8(e.value), "i");
+            var results = [];
+            var regexValue = new RegExp(Alloy.Globals.removeUTF8(e.value), "i");
             for (var i in listChapters) regexValue.test(listChapters[i].chapter) && results.push(listChapters[i]);
             tbl_data = setRowData(results, results.length);
             table.setData([]);
             table.setData(tbl_data);
         });
-        search.addEventListener("focus", function(e) {
-            search.showCancel = !0;
+        search.addEventListener("focus", function() {
+            search.showCancel = true;
         });
-        search.addEventListener("return", function(e) {
-            search.showCancel = !1;
+        search.addEventListener("return", function() {
+            search.showCancel = false;
             search.blur();
         });
-        search.addEventListener("cancel", function(e) {
-            search.showCancel = !1;
+        search.addEventListener("cancel", function() {
+            search.showCancel = false;
             search.blur();
         });
         var optionsDialogOpts = {
             options: [ "A -> Z", "Z -> A" ],
             selectedIndex: 0,
             title: "SORT BY"
-        }, dialog = Titanium.UI.createOptionDialog(optionsDialogOpts);
+        };
+        var dialog = Titanium.UI.createOptionDialog(optionsDialogOpts);
         dialog.addEventListener("click", function(e) {
             switch (e.index) {
               case 0:
                 listChapters.sort(Alloy.Globals.dynamicSort("chapter", 1));
                 break;
+
               case 1:
                 listChapters.sort(Alloy.Globals.dynamicSort("chapter", -1));
             }
             table.setData([]);
             table.setData(setRowData(listChapters, MAX_DISPLAY_ROW));
         });
-        $.sortButton.addEventListener("singletap", function(e) {
+        $.sortButton.addEventListener("singletap", function() {
             dialog.show();
         });
     };
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

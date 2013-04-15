@@ -1,14 +1,15 @@
 function Controller() {
     function selectItem(item, type) {
-        item.addEventListener("click", function(e) {
+        item.addEventListener("click", function() {
             Alloy.Globals.openLoading(args.window);
-            if (type == 0) {
+            if (0 == type) {
                 console.log("manga");
                 Alloy.Globals.getAjax("/manga", {
                     id: item.dataId,
                     userId: Titanium.Facebook.getUid()
                 }, function(response) {
-                    var json = JSON.parse(response), mangaController = Alloy.createController("manga", json.data);
+                    var json = JSON.parse(response);
+                    var mangaController = Alloy.createController("manga", json.data);
                     Alloy.Globals.closeLoading(args.window);
                     mangaController.openMainWindow();
                 });
@@ -16,7 +17,8 @@ function Controller() {
                 id: item.dataId,
                 userId: Titanium.Facebook.getUid()
             }, function(response) {
-                var json = JSON.parse(response), storyController = Alloy.createController("story", json.data);
+                var json = JSON.parse(response);
+                var storyController = Alloy.createController("story", json.data);
                 Alloy.Globals.closeLoading(args.window);
                 storyController.openMainWindow();
             });
@@ -26,20 +28,23 @@ function Controller() {
         switch (type) {
           case 0:
             return "Truyện Tranh";
+
           case 1:
             return "Truyện Chữ";
         }
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.row = Ti.UI.createTableViewRow({
         height: 100,
         backgroundColor: "transparent",
         backgroundImage: "/common/dark-background.png",
         id: "row"
     });
-    $.addTopLevelView($.__views.row);
+    $.__views.row && $.addTopLevelView($.__views.row);
     $.__views.bookCoverView = Ti.UI.createView({
         backgroundColor: "transparent",
         width: "19%",
@@ -103,16 +108,16 @@ function Controller() {
     $.row.dataId = args.data._id;
     $.row.dataType = args.data.bookType;
     var coverLink;
-    args.data.bookType == 0 ? coverLink = Alloy.Globals.SERVER + args.data.folder + "/cover.jpg" : coverLink = Alloy.Globals.SERVER + "/images/story/sample/cover.jpg";
+    coverLink = 0 == args.data.bookType ? Alloy.Globals.SERVER + args.data.folder + "/cover.jpg" : Alloy.Globals.SERVER + "/images/story/sample/cover.jpg";
     $.bookCover.image = coverLink;
     $.bookTitle.text = args.data.title;
     $.newestChapter.text = "Newest: " + args.data.chapters[args.data.chapters.length - 1].chapter;
     $.bookType.text = "Thể loại: " + getTypeText(args.data.bookType);
-    $.bookCoverView.backgroundImage = args.data.bookType == 0 ? "/common/book5.png" : "/common/book5.png";
+    $.bookCoverView.backgroundImage = 0 == args.data.bookType ? "/common/book5.png" : "/common/book5.png";
     selectItem($.row, args.data.bookType);
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

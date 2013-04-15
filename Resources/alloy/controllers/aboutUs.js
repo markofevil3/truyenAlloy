@@ -1,14 +1,16 @@
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.aboutUsWindow = Ti.UI.createWindow({
         backgroundImage: "/common/setting_bg.png",
         barImage: "/common/top.png",
         id: "aboutUsWindow",
         title: "Giới Thiệu"
     });
-    $.addTopLevelView($.__views.aboutUsWindow);
+    $.__views.aboutUsWindow && $.addTopLevelView($.__views.aboutUsWindow);
     $.__views.wrapperView = Ti.UI.createView({
         width: "100%",
         height: "100%",
@@ -60,6 +62,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

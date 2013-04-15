@@ -1,6 +1,6 @@
 function Controller() {
     function selectItem(item) {
-        item.addEventListener("click", function(e) {
+        item.addEventListener("click", function() {
             Alloy.Globals.openLoading(args.window);
             log(args.window);
             Alloy.Globals.getAjax("/mangaReading", {
@@ -18,8 +18,10 @@ function Controller() {
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.row = Ti.UI.createTableViewRow(function() {
         var o = {};
         _.extend(o, {});
@@ -39,7 +41,7 @@ function Controller() {
         });
         return o;
     }());
-    $.addTopLevelView($.__views.row);
+    $.__views.row && $.addTopLevelView($.__views.row);
     $.__views.chapterTitle = Ti.UI.createLabel(function() {
         var o = {};
         _.extend(o, {});
@@ -70,7 +72,8 @@ function Controller() {
     $.__views.row.add($.__views.chapterTitle);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var args = arguments[0] || {}, row = $.row;
+    var args = arguments[0] || {};
+    var row = $.row;
     row.chapterId = args.data._id;
     row.mangaId = args.data.mangaId;
     row.next = args.data.next;
@@ -80,6 +83,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

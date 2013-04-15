@@ -1,38 +1,42 @@
 function Controller() {
     function selectItem(item) {
-        item.addEventListener("click", function(e) {
+        item.addEventListener("click", function() {
             Alloy.Globals.openLoading(args.window);
-            item.dataType == 0 ? Alloy.Globals.getAjax("/getStoryContent", {
+            0 == item.dataType ? Alloy.Globals.getAjax("/getStoryContent", {
                 id: item.dataId,
                 type: item.dataType,
                 chapter: item.dataChapterId
             }, function(response) {
-                var json = JSON.parse(response), storyReadingController = Alloy.createController("storyReading", json.data);
+                var json = JSON.parse(response);
+                var storyReadingController = Alloy.createController("storyReading", json.data);
                 Alloy.Globals.closeLoading(args.window);
                 storyReadingController.openMainWindow();
             }) : Alloy.Globals.getAjax("/getStory", {
                 id: item.dataId,
                 userId: Titanium.Facebook.getUid()
             }, function(response) {
-                var json = JSON.parse(response), storyController = Alloy.createController("story", json.data);
+                var json = JSON.parse(response);
+                var storyController = Alloy.createController("story", json.data);
                 Alloy.Globals.closeLoading(args.window);
                 storyController.openMainWindow();
             });
         });
     }
     function getTypeText(type) {
-        return type == 0 ? "Truyện ngắn" : "Truyện dài";
+        return 0 == type ? "Truyện ngắn" : "Truyện dài";
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.row = Ti.UI.createTableViewRow({
         height: 100,
         backgroundColor: "transparent",
         backgroundImage: "/common/dark-background.png",
         id: "row"
     });
-    $.addTopLevelView($.__views.row);
+    $.__views.row && $.addTopLevelView($.__views.row);
     $.__views.bookCoverView = Ti.UI.createView({
         backgroundColor: "transparent",
         width: "19%",
@@ -99,11 +103,11 @@ function Controller() {
     $.storyTitle.text = args.data.title;
     $.storyAuthor.text = "Tác giả: " + args.data.author;
     $.storyType.text = "Thể loại: " + getTypeText(args.data.type);
-    $.bookCoverView.backgroundImage = args.data.type == 0 ? "/common/book5.png" : "/common/book5.png";
+    $.bookCoverView.backgroundImage = 0 == args.data.type ? "/common/book5.png" : "/common/book5.png";
     selectItem($.row);
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

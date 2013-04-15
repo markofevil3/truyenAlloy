@@ -28,7 +28,7 @@ function overrideTabs(tabGroup, backgroundOptions, selectedOptions, deselectedOp
     }
     // customize the selected and deselected based on properties in the tab.
     selectedOptions.title = deselectedOptions.title = tab.title;
-    selectedOptions.image = deselectedOptions.image = tab.icon;
+    // selectedOptions.image = deselectedOptions.image = tab.icon;
     selectedOptions.height = deselectedOptions.height = 50;
     if (tab.backgroundImage) {
         selectedOptions.backgroundImage = deselectedOptions.backgroundImage = tab.backgroundImage;
@@ -40,8 +40,23 @@ function overrideTabs(tabGroup, backgroundOptions, selectedOptions, deselectedOp
         deselectedOptions.backgroundImage = tab.deselectedBackgroundImage;
     }
     selectedOptions.visible = false;
-    background.add(tab.deselected = Ti.UI.createButton(deselectedOptions));
-    background.add(tab.selected = Ti.UI.createButton(selectedOptions));
+  	var iconBtn1 = Ti.UI.createImageView({
+			image: tab.icon,
+			height: 30,
+			width: 30
+		});
+  	var iconBtn2 = Ti.UI.createImageView({
+			image: tab.icon,
+			height: 30,
+			width: 30
+		});
+		tab.deselected = Ti.UI.createButton(deselectedOptions);
+		tab.selected = Ti.UI.createButton(selectedOptions);
+    tab.selected.add(iconBtn1);
+    tab.deselected.add(iconBtn2);
+    background.add(tab.deselected);
+    background.add(tab.selected);
+
     Titanium.Gesture.addEventListener('orientationchange', function(e) {
 	    switch (Titanium.Gesture.orientation) {
         case Titanium.UI.LANDSCAPE_LEFT:

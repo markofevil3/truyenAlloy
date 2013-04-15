@@ -7,16 +7,16 @@
 			  <TableViewRow id="MangaList" class="homeRow" dataName="mangaList" onClick="selectMenu">
 			    <View class="homeRowBackground">
             <Label class="homeMenuName"> Manga </Label>
-            <ImageView class="homeBackgroundPanel" image="/common/bg_paper_tournament.png"/>
+            <ImageView class="homeBackgroundPanel" image="/common/bg_blue.png"/>
 			    </View>
 			  </TableViewRow>
 			  <TableViewRow id="StoryList" class="homeRow" dataName="storyList" onClick="selectMenu">
 			    <Label class="homeMenuName"> Truyen Chu </Label>
-			    <ImageView class="homeBackgroundPanel" image="/common/bg_paper_tournament.png"/>
+			    <ImageView class="homeBackgroundPanel" image="/common/bg_pink.png"/>
 			  </TableViewRow>
 			  <TableViewRow id="FunnyList" class="homeRow" dataName="funnyList" onClick="selectMenu">
 			    <Label class="homeMenuName"> Truyen Cuoi </Label>
-			    <ImageView class="homeBackgroundPanel" image="/common/bg_paper_tournament.png"/>
+			    <ImageView class="homeBackgroundPanel" image="/common/bg_green.png"/>
 			  </TableViewRow>
 			</TableView>
 		</Window>

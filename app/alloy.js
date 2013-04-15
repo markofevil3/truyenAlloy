@@ -17,8 +17,13 @@ Alloy.Globals.CURRENT_TAB = null;
 Alloy.Globals.currentLoadingView = null;
 Alloy.Globals.FBPOST_LINK = 'https://www.facebook.com/bui.p.quan?ref=tn_tnmn';
 
-Titanium.Facebook.appid = "514307815249030";
-Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
+// Titanium.Facebook.appid = "514307815249030";
+// Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
+Alloy.Globals.facebook = require('facebook');
+Alloy.Globals.facebook.appid = "514307815249030";
+Alloy.Globals.facebook.permissions = ['publish_stream', 'read_stream'];
+Alloy.Globals.facebook.forceDialogAuth = true;
+
 
 var loadingIcon = Titanium.UI.createActivityIndicator({
 	style:Ti.UI.iPhone.ActivityIndicatorStyle.BIG,
@@ -72,10 +77,11 @@ Alloy.Globals.fbPost = function(itemTitle, imageLink) {
 		description: "Hãy tải phần mềm để có thể đọc truyện mọi lúc mọi nơi, update liên tục, thông báo mỗi khi có chapter mới và rất nhiều tính năng khác. FREEEEEEE!!!!!",
 		test: [ {foo:'Encoding test', bar:'Durp durp'}, 'test' ]
 	};
-	Titanium.Facebook.dialog("feed", data, showRequestResult);
+	Alloy.Globals.facebook.dialog("feed", data, showRequestResult);
 }
 
 Alloy.Globals.openLoading = function(window) {
+	log(window);
 	loadingIcon.show();
 	Alloy.Globals.currentLoadingView = loadingView;
 	window.add(loadingView);
@@ -286,16 +292,7 @@ Alloy.Globals.adv = function(type, callback) {
 	 width: 'auto',
 	 height: 50
 	});
-	Alloy.Globals.getAjax('/adv', {
-		'type': type
-	},
-	function(response) {
-		var link = JSON.parse(response).data;
-		advImage.addEventListener('click', function(e) {
-			Titanium.Platform.openURL(link);
-		});
-		callback(advImage);
-	});
+	callback(advImage);
 };
 
 function isHash(obj) {

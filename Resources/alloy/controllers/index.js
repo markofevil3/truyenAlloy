@@ -1,7 +1,9 @@
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.tabGroup = Ti.UI.createTabGroup({
         id: "tabGroup"
     });
@@ -9,21 +11,21 @@ function Controller() {
         id: "__alloyId8"
     });
     $.__views.tabGroup.addTab($.__views.__alloyId8.getViewEx({
-        recurse: !0
+        recurse: true
     }));
     $.__views.__alloyId9 = Alloy.createController("favorite", {
         id: "__alloyId9"
     });
     $.__views.tabGroup.addTab($.__views.__alloyId9.getViewEx({
-        recurse: !0
+        recurse: true
     }));
     $.__views.__alloyId10 = Alloy.createController("setting", {
         id: "__alloyId10"
     });
     $.__views.tabGroup.addTab($.__views.__alloyId10.getViewEx({
-        recurse: !0
+        recurse: true
     }));
-    $.addTopLevelView($.__views.tabGroup);
+    $.__views.tabGroup && $.addTopLevelView($.__views.tabGroup);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var overrideTabs = require("IosCustomTabBar");
@@ -44,6 +46,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;

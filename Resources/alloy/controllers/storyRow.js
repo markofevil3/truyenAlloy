@@ -1,28 +1,31 @@
 function Controller() {
     function selectItem(item) {
-        item.addEventListener("click", function(e) {
+        item.addEventListener("click", function() {
             Alloy.Globals.openLoading(args.window);
             Alloy.Globals.getAjax("/getStoryContent", {
                 id: item.dataId,
                 type: item.dataType,
                 chapter: item.dataChapterId
             }, function(response) {
-                var json = JSON.parse(response), storyReadingController = Alloy.createController("storyReading", json.data);
+                var json = JSON.parse(response);
+                var storyReadingController = Alloy.createController("storyReading", json.data);
                 Alloy.Globals.closeLoading(args.window);
                 storyReadingController.openMainWindow();
             });
         });
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
-    $model = arguments[0] ? arguments[0].$model : null;
-    var $ = this, exports = {}, __defers = {};
+    arguments[0] ? arguments[0]["__parentSymbol"] : null;
+    arguments[0] ? arguments[0]["$model"] : null;
+    var $ = this;
+    var exports = {};
     $.__views.row = Ti.UI.createTableViewRow({
         height: 40,
         backgroundColor: "transparent",
         backgroundImage: "/common/bookshelfBackground.png",
         id: "row"
     });
-    $.addTopLevelView($.__views.row);
+    $.__views.row && $.addTopLevelView($.__views.row);
     $.__views.chapterTitle = Ti.UI.createLabel({
         color: "#fff",
         textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
@@ -37,7 +40,8 @@ function Controller() {
     $.__views.row.add($.__views.chapterTitle);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var args = arguments[0] || {}, row = $.row;
+    var args = arguments[0] || {};
+    var row = $.row;
     row.dataId = args.data.storyId;
     row.dataType = 1;
     row.dataChapterId = args.data._id;
@@ -47,6 +51,6 @@ function Controller() {
     _.extend($, exports);
 }
 
-var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._, $model;
+var Alloy = require("alloy"), Backbone = Alloy.Backbone, _ = Alloy._;
 
 module.exports = Controller;
