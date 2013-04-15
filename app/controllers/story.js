@@ -1,5 +1,5 @@
 var args = arguments[0] || {};
-var MAX_DISPLAY_ROW = 20;
+var MAX_DISPLAY_ROW = 10;
 var table = $.bookShellTable;
 var search = $.searchButton;
 

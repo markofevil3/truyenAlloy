@@ -1,5 +1,5 @@
 "#storyWindow": {
-	backgroundImage: '/common/setting_bg.png',
+	backgroundImage: '/common/shellBg.png',
 	barImage: '/common/top.png',
 },
 "#wrapper": {
@@ -8,19 +8,33 @@
 	top: 0,
 	layout: 'vertical'
 },
-"#storyInfoView": {
+"#storyInfoView[platform=ios formFactor=handheld]": {
 	width: '100%',
 	height: 120,
 	backgroundColor: '#d8cdc0',
 	backgroundImage: '/common/whitePaper.png',
 	layout: 'horizontal'
 },
-"#shortDesc": {
+"#storyInfoView[platform=ios formFactor=tablet]": {
+	width: '100%',
+	height: 240,
+	backgroundColor: '#d8cdc0',
+	backgroundImage: '/common/whitePaper.png',
+	layout: 'horizontal'
+},
+"#shortDesc[platform=ios formFactor=handheld]": {
 	width: '100%',
 	textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
 	font: { fontSize: 14 },
 	height: '55%',
 	bottom: 20
+},
+"#shortDesc[platform=ios formFactor=tablet]": {
+	width: '100%',
+	textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	font: { fontSize: 28 },
+	height: '55%',
+	bottom: 40
 },
 "#bookBackgroundView": {
 	width: '25%',
@@ -30,8 +44,8 @@
 	backgroundImage: '/common/book1.png',
 },
 "#bookCover": {
-	width: '80%',
-	height: '96%',
+	width: '78%',
+	height: '94%',
 	defaultImage: '/common/default_image.jpg',
 	top: 0,
 	left: '14%',
@@ -43,13 +57,22 @@
 	layout: 'vertical',
 	left: 5
 },
-"#bookTitle": {
+"#bookTitle[platform=ios formFactor=handheld]": {
 	color: '#fff',
 	font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE'},
 	left: 0
 },
-"#bookAuthor": {
+"#bookTitle[platform=ios formFactor=tablet]": {
+	color: '#fff',
+	font: { fontWeight: 'bold', fontSize: 38, fontFamily: 'Chalkboard SE'},
+	left: 0
+},
+"#bookAuthor[platform=ios formFactor=handheld]": {
 	font: { fontSize: 16, fontStyle: 'italic' },
+	left: 0
+},
+"#bookAuthor[platform=ios formFactor=tablet]": {
+	font: { fontSize: 32, fontStyle: 'italic' },
 	left: 0
 },
 "#bookShellTable": {
@@ -58,7 +81,11 @@
   style: Ti.UI.iPhone.TableViewStyle.PLAIN,
   separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 },
-"#advView": {
+"#advView[platform=ios formFactor=handheld]": {
 	width: '100%',
 	height: 50,
+},
+"#advView[platform=ios formFactor=tablet]": {
+	width: '100%',
+	height: 66,
 },

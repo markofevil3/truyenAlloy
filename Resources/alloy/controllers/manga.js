@@ -132,8 +132,8 @@ function Controller() {
     });
     $.__views.mangaInfoView.add($.__views.bookBackgroundView);
     $.__views.bookCover = Ti.UI.createImageView({
-        width: "80%",
-        height: "96%",
+        width: "78%",
+        height: "94%",
         defaultImage: "/common/default_image.jpg",
         top: 0,
         left: "14%",
@@ -315,7 +315,7 @@ function Controller() {
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 100
+            height: 66
         });
         _.extend(o, {
             id: "advView"

@@ -1,7 +1,7 @@
 var args = arguments[0] || {};
 
 exports.openMainWindow = function() {
-	$.contentLabel.text = args.content;
+	$.contentLabel.value = args.content;
 	$.storyReadingWindow.open({ transition: Ti.UI.iPhone.AnimationStyle.CURL_UP });
 };
 
@@ -12,9 +12,10 @@ function closeWindow() {
 };
 
 function changeTextSize(e) {
+	var ratio = Alloy.Globals.isTablet() ? 1.8 : 1;
 	if (e.source.dataType == '0') {
-		$.contentLabel.font = { fontSize: 18 };
+		$.contentLabel.font = { fontSize: 18 * ratio };
 	} else {
-		$.contentLabel.font = { fontSize: 22 };
+		$.contentLabel.font = { fontSize: 22 * ratio };
 	}
 };

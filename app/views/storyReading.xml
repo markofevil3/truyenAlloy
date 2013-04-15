@@ -7,7 +7,7 @@
     </View>
     <ScrollView id="contentView">
       <View id="contentWrapper">
-        <Label id="contentLabel" />
+        <TextArea id="contentLabel" />
       </View>
     </ScrollView>
   </Window>

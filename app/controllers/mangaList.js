@@ -1,4 +1,9 @@
-var MAX_DISPLAY_ROW = 3;
+if (Alloy.Globals.isTablet) {
+	var MAX_DISPLAY_ROW = 5;
+} else {
+	var MAX_DISPLAY_ROW = 3;
+}
+
 var search = $.searchButton;
 
 exports.openMainWindow = function() {

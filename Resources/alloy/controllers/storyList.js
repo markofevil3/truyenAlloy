@@ -100,7 +100,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.storyListWindow = Ti.UI.createWindow({
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         barImage: "/common/top.png",
         id: "storyListWindow",
         title: "Story"
@@ -141,25 +141,53 @@ function Controller() {
         id: "sortButton"
     });
     $.__views.searchView.add($.__views.sortButton);
-    $.__views.advView = Ti.UI.createView({
-        width: "100%",
-        height: 50,
-        top: 40,
-        id: "advView"
-    });
+    $.__views.advView = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: "100%",
+            height: 50,
+            top: 40
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: "100%",
+            height: 66,
+            top: 40
+        });
+        _.extend(o, {
+            id: "advView"
+        });
+        return o;
+    }());
     $.__views.storyListWindow.add($.__views.advView);
-    $.__views.bookShellTable = Ti.UI.createTableView({
-        backgroundColor: "transparent",
-        separatorColor: "transparent",
-        style: Ti.UI.iPhone.TableViewStyle.PLAIN,
-        separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-        top: 100,
-        id: "bookShellTable"
-    });
+    $.__views.bookShellTable = Ti.UI.createTableView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            backgroundColor: "transparent",
+            separatorColor: "transparent",
+            style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+            separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+            top: 90
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            backgroundColor: "transparent",
+            separatorColor: "transparent",
+            style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+            separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+            top: 106
+        });
+        _.extend(o, {
+            id: "bookShellTable"
+        });
+        return o;
+    }());
     $.__views.storyListWindow.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var MAX_DISPLAY_ROW = 5;
+    if (Alloy.Globals.isTablet) var MAX_DISPLAY_ROW = 10; else var MAX_DISPLAY_ROW = 5;
     var search = $.searchButton;
     var table = $.bookShellTable;
     var listStory;

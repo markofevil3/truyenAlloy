@@ -138,7 +138,7 @@ function Controller() {
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             backgroundColor: "#000",
-            height: 80,
+            height: 70,
             top: 0
         });
         _.extend(o, {
@@ -164,26 +164,26 @@ function Controller() {
             borderColor: "#ffffff",
             backgroundColor: "#222",
             backgroundImage: "NONE",
-            selectedColor: "#333",
-            color: "#CCCCCC"
+            selectedColor: "#fff",
+            color: "#c80500"
         });
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             title: "close",
-            width: 120,
-            height: 50,
+            width: 100,
+            height: 40,
             right: 10,
             font: {
                 fontWeight: "bold",
-                fontSize: 28
+                fontSize: 24
             },
             borderRadius: 10,
             borderWidth: 2,
             borderColor: "#ffffff",
             backgroundColor: "#222",
             backgroundImage: "NONE",
-            selectedColor: "#333",
-            color: "#CCCCCC"
+            selectedColor: "#fff",
+            color: "#c80500"
         });
         _.extend(o, {
             id: "closeButton"
@@ -240,52 +240,116 @@ function Controller() {
         return o;
     }());
     $.__views.topBar.add($.__views.pageCount);
-    $.__views.buttonBar = Ti.UI.createView({
-        top: 50,
-        height: Titanium.UI.SIZE,
-        id: "buttonBar"
-    });
+    $.__views.buttonBar = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            top: 50,
+            height: Titanium.UI.SIZE
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            top: 80,
+            height: Titanium.UI.SIZE
+        });
+        _.extend(o, {
+            id: "buttonBar"
+        });
+        return o;
+    }());
     $.__views.funcBar.add($.__views.buttonBar);
-    $.__views.prevButton = Ti.UI.createButton({
-        width: 120,
-        height: 30,
-        font: {
-            fontWeight: "bold",
-            fontSize: 14
-        },
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: "#ffffff",
-        backgroundColor: "#222",
-        backgroundImage: "NONE",
-        selectedColor: "#333",
-        color: "#CCCCCC",
-        left: 10,
-        visible: false,
-        id: "prevButton",
-        title: "Chapter Trước"
-    });
+    $.__views.prevButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: 120,
+            height: 30,
+            font: {
+                fontWeight: "bold",
+                fontSize: 14
+            },
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: "#0e2774",
+            backgroundColor: "#4f76ff",
+            backgroundImage: "NONE",
+            selectedColor: "#333",
+            selectedBackgroundColor: "#83b7ff",
+            color: "#CCCCCC"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: 220,
+            height: 50,
+            font: {
+                fontWeight: "bold",
+                fontSize: 26
+            },
+            borderRadius: 10,
+            borderWidth: 2,
+            borderColor: "#0e2774",
+            backgroundColor: "#4f76ff",
+            backgroundImage: "NONE",
+            selectedColor: "#333",
+            selectedBackgroundColor: "#83b7ff",
+            color: "#CCCCCC"
+        });
+        _.extend(o, {
+            left: 10,
+            visible: false,
+            backgroundColor: "#05803d",
+            borderColor: "#04622f",
+            id: "prevButton",
+            title: "Chapter Trước"
+        });
+        return o;
+    }());
     $.__views.buttonBar.add($.__views.prevButton);
     changeChapter ? $.__views.prevButton.addEventListener("click", changeChapter) : __defers["$.__views.prevButton!click!changeChapter"] = true;
-    $.__views.nextButton = Ti.UI.createButton({
-        width: 120,
-        height: 30,
-        font: {
-            fontWeight: "bold",
-            fontSize: 14
-        },
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: "#ffffff",
-        backgroundColor: "#222",
-        backgroundImage: "NONE",
-        selectedColor: "#333",
-        color: "#CCCCCC",
-        right: 10,
-        visible: false,
-        id: "nextButton",
-        title: "Chapter Sau"
-    });
+    $.__views.nextButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {});
+        Alloy.isHandheld && _.extend(o, {
+            width: 120,
+            height: 30,
+            font: {
+                fontWeight: "bold",
+                fontSize: 14
+            },
+            borderRadius: 5,
+            borderWidth: 1,
+            borderColor: "#0e2774",
+            backgroundColor: "#4f76ff",
+            backgroundImage: "NONE",
+            selectedColor: "#333",
+            selectedBackgroundColor: "#83b7ff",
+            color: "#CCCCCC"
+        });
+        _.extend(o, {});
+        Alloy.isTablet && _.extend(o, {
+            width: 220,
+            height: 50,
+            font: {
+                fontWeight: "bold",
+                fontSize: 26
+            },
+            borderRadius: 10,
+            borderWidth: 2,
+            borderColor: "#0e2774",
+            backgroundColor: "#4f76ff",
+            backgroundImage: "NONE",
+            selectedColor: "#333",
+            selectedBackgroundColor: "#83b7ff",
+            color: "#CCCCCC"
+        });
+        _.extend(o, {
+            right: 10,
+            visible: false,
+            id: "nextButton",
+            title: "Chapter Sau"
+        });
+        return o;
+    }());
     $.__views.buttonBar.add($.__views.nextButton);
     changeChapter ? $.__views.nextButton.addEventListener("click", changeChapter) : __defers["$.__views.nextButton!click!changeChapter"] = true;
     $.__views.advView2 = Ti.UI.createView(function() {
@@ -299,7 +363,7 @@ function Controller() {
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 100,
+            height: 66,
             bottom: 0
         });
         _.extend(o, {

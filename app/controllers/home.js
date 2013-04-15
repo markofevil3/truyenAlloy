@@ -8,6 +8,10 @@ $.homeWindow.addEventListener('focus', function(e) {
 });
 
 function selectMenu(e) {
-	var selectedMenuController = Alloy.createController(e.rowData.dataName);
-	selectedMenuController.openMainWindow();
+	if (e.rowData.dataName == "funnyList") {
+		alert("Coming Soon!");
+	} else {
+		var selectedMenuController = Alloy.createController(e.rowData.dataName);
+		selectedMenuController.openMainWindow();
+	}
 };

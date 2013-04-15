@@ -1,5 +1,5 @@
 "#mangaListWindow": {
-	backgroundImage: '/common/setting_bg.png',
+	backgroundImage: '/common/shellBg.png',
 	barImage: '/common/top.png'
 },
 "#advView[platform=ios formFactor=handheld]": {
@@ -9,7 +9,7 @@
 },
 "#advView[platform=ios formFactor=tablet]": {
 	width: '100%',
-	height: 100,
+	height: 66,
 	top : 40,
 },
 "#bookShellTable[platform=ios formFactor=handheld]": {
@@ -24,5 +24,5 @@
   separatorColor: 'transparent',
   style: Ti.UI.iPhone.TableViewStyle.PLAIN,
   separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-  top: 130,
+  top: 106,
 }

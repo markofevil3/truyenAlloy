@@ -1,7 +1,9 @@
 function Controller() {
     function selectMenu(e) {
-        var selectedMenuController = Alloy.createController(e.rowData.dataName);
-        selectedMenuController.openMainWindow();
+        if ("funnyList" == e.rowData.dataName) alert("Coming Soon!"); else {
+            var selectedMenuController = Alloy.createController(e.rowData.dataName);
+            selectedMenuController.openMainWindow();
+        }
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     arguments[0] ? arguments[0]["__parentSymbol"] : null;

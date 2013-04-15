@@ -80,7 +80,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.mangaListWindow = Ti.UI.createWindow({
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         barImage: "/common/top.png",
         id: "mangaListWindow",
         title: "Manga"
@@ -132,7 +132,7 @@ function Controller() {
         _.extend(o, {});
         Alloy.isTablet && _.extend(o, {
             width: "100%",
-            height: 100,
+            height: 66,
             top: 40
         });
         _.extend(o, {
@@ -157,7 +157,7 @@ function Controller() {
             separatorColor: "transparent",
             style: Ti.UI.iPhone.TableViewStyle.PLAIN,
             separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-            top: 130
+            top: 106
         });
         _.extend(o, {
             id: "bookShellTable"
@@ -167,7 +167,7 @@ function Controller() {
     $.__views.mangaListWindow.add($.__views.bookShellTable);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var MAX_DISPLAY_ROW = 3;
+    if (Alloy.Globals.isTablet) var MAX_DISPLAY_ROW = 5; else var MAX_DISPLAY_ROW = 3;
     var search = $.searchButton;
     exports.openMainWindow = function() {
         Alloy.Globals.CURRENT_TAB.open($.mangaListWindow);
