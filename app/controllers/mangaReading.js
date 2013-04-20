@@ -114,6 +114,8 @@ function changePage() {
 					currentPage = nextImage;
 					pageCount.text = (currentPage.index + 1) + '/' + (listImages.length);
 				});
+			} else {
+				showFuncBar();
 			}
 		}
 		if (e.direction == 'right') {

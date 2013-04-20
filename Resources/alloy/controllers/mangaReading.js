@@ -83,7 +83,7 @@ function Controller() {
         $.mangaReadingWindow.addEventListener("swipe", function(e) {
             if ("left" == e.direction) {
                 var nextImage = images[currentPage.index + 1];
-                nextImage && $.imageHolderView.animate({
+                if (nextImage) $.imageHolderView.animate({
                     view: nextImage,
                     transition: Ti.UI.iPhone.AnimationStyle.CURL_UP,
                     duration: 500
@@ -91,7 +91,10 @@ function Controller() {
                     nextImage.show();
                     currentPage = nextImage;
                     pageCount.text = currentPage.index + 1 + "/" + listImages.length;
-                });
+                }); else {
+                    log("show bar");
+                    showFuncBar();
+                }
             }
             if ("right" == e.direction) {
                 var nextImage = images[currentPage.index - 1];

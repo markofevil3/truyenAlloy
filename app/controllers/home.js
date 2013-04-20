@@ -3,7 +3,7 @@ Alloy.Globals.adv(Alloy.Globals.getDeviceType(), function(advImage) {
 	$.advertise.add(advImage);
 });
 
-$.homeWindow.addEventListener('focus', function(e) {
+$.homeTab.addEventListener('focus', function(e) {
 	Alloy.Globals.CURRENT_TAB = $.homeTab;
 });
 

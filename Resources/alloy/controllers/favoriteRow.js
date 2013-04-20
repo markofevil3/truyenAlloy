@@ -2,18 +2,15 @@ function Controller() {
     function selectItem(item, type) {
         item.addEventListener("click", function() {
             Alloy.Globals.openLoading(args.window);
-            if (0 == type) {
-                console.log("manga");
-                Alloy.Globals.getAjax("/manga", {
-                    id: item.dataId,
-                    userId: Titanium.Facebook.getUid()
-                }, function(response) {
-                    var json = JSON.parse(response);
-                    var mangaController = Alloy.createController("manga", json.data);
-                    Alloy.Globals.closeLoading(args.window);
-                    mangaController.openMainWindow();
-                });
-            } else Alloy.Globals.getAjax("/getStory", {
+            0 == type ? Alloy.Globals.getAjax("/manga", {
+                id: item.dataId,
+                userId: Titanium.Facebook.getUid()
+            }, function(response) {
+                var json = JSON.parse(response);
+                var mangaController = Alloy.createController("manga", json.data);
+                Alloy.Globals.closeLoading(args.window);
+                mangaController.openMainWindow();
+            }) : Alloy.Globals.getAjax("/getStory", {
                 id: item.dataId,
                 userId: Titanium.Facebook.getUid()
             }, function(response) {

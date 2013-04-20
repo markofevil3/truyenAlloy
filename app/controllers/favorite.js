@@ -3,7 +3,6 @@ var mangaRows;
 var storyRows;
 var tableView = $.bookShellTable;
 
-
 function setRowData(data, type) {
 	var dataSet = [];
 	for (var i = 0; i < data.length; i++) {
@@ -45,7 +44,7 @@ function getFavorites() {
 // var facebookButton = Alloy.Globals.facebook.createLoginButton({
 	// style: Ti.Facebook.BUTTON_STYLE_NORMAL,
 // });
-$.favoriteWindow.addEventListener('focus', function(f) {
+$.favoriteTab.addEventListener('focus', function(f) {
 	Alloy.Globals.CURRENT_TAB = $.favoriteTab;
 	if (Alloy.Globals.facebook.loggedIn == 0) {
 		Alloy.Globals.facebook.authorize();

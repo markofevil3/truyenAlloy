@@ -95,7 +95,7 @@ function Controller() {
     var mangaRows;
     var storyRows;
     var tableView = $.bookShellTable;
-    $.favoriteWindow.addEventListener("focus", function() {
+    $.favoriteTab.addEventListener("focus", function() {
         Alloy.Globals.CURRENT_TAB = $.favoriteTab;
         if (0 == Alloy.Globals.facebook.loggedIn) {
             Alloy.Globals.facebook.authorize();

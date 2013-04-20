@@ -18,7 +18,7 @@ function Controller() {
     var exports = {};
     var __defers = {};
     $.__views.supportWindow = Ti.UI.createWindow({
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         barImage: "/common/top.png",
         id: "supportWindow",
         title: "Yêu Cầu Truyện"
@@ -28,7 +28,7 @@ function Controller() {
         width: "100%",
         height: "100%",
         backgroundColor: "#eabf8b",
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         layout: "vertical",
         id: "wrapperView"
     });

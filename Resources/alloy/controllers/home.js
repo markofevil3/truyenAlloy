@@ -279,7 +279,7 @@ function Controller() {
     Alloy.Globals.adv(Alloy.Globals.getDeviceType(), function(advImage) {
         $.advertise.add(advImage);
     });
-    $.homeWindow.addEventListener("focus", function() {
+    $.homeTab.addEventListener("focus", function() {
         Alloy.Globals.CURRENT_TAB = $.homeTab;
     });
     __defers["$.__views.MangaList!click!selectMenu"] && $.__views.MangaList.addEventListener("click", selectMenu);

@@ -42,6 +42,7 @@ function Controller() {
         color: "#888",
         style: 0
     });
+    Alloy.Globals.TAB_GROUP = $.tapGroup;
     $.tabGroup.open();
     _.extend($, exports);
 }

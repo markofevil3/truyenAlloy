@@ -19,7 +19,6 @@ function selectItem(item, type) {
 	item.addEventListener('click', function(e) {
 		Alloy.Globals.openLoading(args.window);
 		if (type == 0) {
-			console.log('manga');
 			Alloy.Globals.getAjax('/manga', {
 				'id': item.dataId,
 				'userId': Titanium.Facebook.getUid()

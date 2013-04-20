@@ -14,6 +14,7 @@ Alloy.Globals.MAX_DISPLAY_ROW = 30;
 Alloy.Globals.NEW_TIME_MILLISECONDS = 259200000;
 Alloy.Globals.RATIO = 1;
 Alloy.Globals.CURRENT_TAB = null;
+Alloy.Globals.TAB_GROUP = null;
 Alloy.Globals.currentLoadingView = null;
 Alloy.Globals.FBPOST_LINK = 'https://www.facebook.com/bui.p.quan?ref=tn_tnmn';
 
@@ -135,7 +136,6 @@ Alloy.Globals.backButton = function(window) {
 Alloy.Globals.getAjax = function(url, query, callback) {
 	var xhr = Ti.Network.createHTTPClient({
     onload: function(e) {
-	    Ti.API.debug(this.responseText);
 	    if (callback) {
 	      callback(this.responseText);
 	    }

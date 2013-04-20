@@ -3,8 +3,8 @@ Alloy.Globals.adv(Alloy.Globals.getDeviceType(), function(advImage) {
 	$.adv.add(advImage);
 });
 
-$.settingWindow.addEventListener('focus', function(e) {
-Alloy.Globals.CURRENT_TAB = $.settingTab;
+$.settingTab.addEventListener('focus', function(e) {
+	Alloy.Globals.CURRENT_TAB = $.settingTab;
 });
 
 $.facebookLikeBox.url = Alloy.Globals.SERVER + '/facebook?type=' + Alloy.Globals.isTablet();

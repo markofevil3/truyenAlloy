@@ -5,7 +5,7 @@ function Controller() {
     var $ = this;
     var exports = {};
     $.__views.accountWindow = Ti.UI.createWindow({
-        backgroundImage: "/common/setting_bg.png",
+        backgroundImage: "/common/shellBg.png",
         barImage: "/common/top.png",
         id: "accountWindow",
         title: "Tài Khoản"

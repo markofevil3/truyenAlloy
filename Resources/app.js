@@ -32,6 +32,8 @@ Alloy.Globals.RATIO = 1;
 
 Alloy.Globals.CURRENT_TAB = null;
 
+Alloy.Globals.TAB_GROUP = null;
+
 Alloy.Globals.currentLoadingView = null;
 
 Alloy.Globals.FBPOST_LINK = "https://www.facebook.com/bui.p.quan?ref=tn_tnmn";
@@ -121,7 +123,6 @@ Alloy.Globals.backButton = function(window) {
 Alloy.Globals.getAjax = function(url, query, callback) {
     var xhr = Ti.Network.createHTTPClient({
         onload: function() {
-            Ti.API.debug(this.responseText);
             callback && callback(this.responseText);
         },
         onerror: function(e) {
